@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MdpInput extends StatefulWidget {
-  MdpInput(
-      this.label, this.width, this.onChanged, this.obscureText, this.onTap);
+  MdpInput(this.label, this.width, this.onChanged);
   final String label;
   final ValueChanged<String>? onChanged;
   final double width;
-  final bool obscureText;
-  final VoidCallback onTap;
 
   @override
   State<MdpInput> createState() => _MdpInputState();
 }
 
 class _MdpInputState extends State<MdpInput> {
+  bool _isObscure = true;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -26,6 +24,17 @@ class _MdpInputState extends State<MdpInput> {
             cursorColor: Colors.black,
             decoration: InputDecoration(
               labelText: widget.label,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _isObscure ? Icons.visibility : Icons.visibility_off,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isObscure = !_isObscure;
+                  });
+                },
+              ),
               labelStyle: GoogleFonts.nunitoSans(
                   color: Colors.grey,
                   fontWeight: FontWeight.w400,
@@ -34,16 +43,9 @@ class _MdpInputState extends State<MdpInput> {
                 borderSide: BorderSide(color: Colors.grey),
               ),
             ),
-            obscureText: widget.obscureText,
+            obscureText: _isObscure,
           ),
         ),
-        GestureDetector(
-          onTap: widget.onTap,
-          child: Image.asset(
-            "assets/images/eye.png",
-            height: 100,
-          ),
-        )
       ],
     );
   }

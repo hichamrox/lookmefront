@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/formInput.dart';
+import 'package:lookmefront/pages/home.dart';
+import 'package:lookmefront/pages/signup.dart';
 
 import '../components/button.dart';
 import '../components/mdpInput.dart';
@@ -18,7 +20,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    bool obscureText = true;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.only(left: 30),
             child: FormInput(
               "Email",
-              size.width * 0.6,
+              size.width * 0.8,
               (value) {
                 setState(() {
                   mail = value;
@@ -65,19 +66,14 @@ class _LoginPageState extends State<LoginPage> {
           Padding(
             padding: const EdgeInsets.only(left: 30, bottom: 40),
             child: MdpInput(
-                "Mot de passe",
-                size.width * 0.6,
-                (value) {
-                  setState(() {
-                    password = value;
-                  });
-                },
-                obscureText,
-                () {
-                  setState(() {
-                    obscureText = !obscureText;
-                  });
-                }),
+              "Mot de passe",
+              size.width * 0.8,
+              (value) {
+                setState(() {
+                  password = value;
+                });
+              },
+            ),
           ),
           GestureDetector(
             onTap: () {},
@@ -98,13 +94,18 @@ class _LoginPageState extends State<LoginPage> {
                   Button("Se connecter", true, true, size.width * 0.7, 50, () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                  MaterialPageRoute(builder: (context) => const HomePage()),
                 );
               }, 10),
             ),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignupPage()),
+              );
+            },
             child: Center(
               child: Text(
                 "S'inscrire",
