@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lookmefront/components/itemCard.dart';
+import 'package:lookmefront/pages/cart.dart';
 import 'package:lookmefront/pages/product.dart';
 
 class AccueilPage extends StatefulWidget {
@@ -28,10 +29,18 @@ class _AccueilPageState extends State<AccueilPage> {
             ),
           ),
           actions: [
-            Icon(
-              Icons.shopping_cart,
-              color: Colors.grey,
-              size: 40,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CartPage()),
+                );
+              },
+              child: Icon(
+                Icons.shopping_cart,
+                color: Colors.grey,
+                size: 40,
+              ),
             )
           ],
         ),
