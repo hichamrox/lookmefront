@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/formInput.dart';
 import 'package:lookmefront/pages/home.dart';
 import 'package:lookmefront/pages/signup.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lookmefront/services/authservices.dart';
 import '../components/button.dart';
 import '../components/mdpInput.dart';
 
@@ -15,8 +16,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late String mail;
-  late String password;
+  var name, password, token;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
               size.width * 0.8,
               (value) {
                 setState(() {
-                  mail = value;
+                  name = value;
                 });
               },
             ),
@@ -92,10 +92,22 @@ class _LoginPageState extends State<LoginPage> {
             child: Center(
               child:
                   Button("Se connecter", true, true, size.width * 0.7, 50, () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                );
+                AuthService().login(name, password).then((val) {
+                  if (val.data['success']) {
+                    token = val.data['token'];
+                    Fluttertoast.showToast(
+                        msg: val.data['msg'],
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: Colors.green,
+                        textColor: Colors.white,
+                        fontSize: 16);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
+                  }
+                });
               }, 10),
             ),
           ),
