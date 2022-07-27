@@ -6,9 +6,6 @@ import '../components/formInput.dart';
 import 'addressList.dart';
 
 class EditAddressPage extends StatefulWidget {
-  String name;
-  String address;
-  EditAddressPage(this.name, this.address);
 
   @override
   _EditAddressPageState createState() => _EditAddressPageState();
@@ -38,17 +35,17 @@ class _EditAddressPageState extends State<EditAddressPage> {
             padding: const EdgeInsets.only(left: 35.0, top: 100.0),
             child: FormInput("Nom et Prénom", size.width * 0.8, (value) {
               setState(() {
-                widget.name = value;
+                name = value;
               });
-            }, widget.name),
+            }),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 35.0, top: 20.0),
             child: FormInput("Adresse", size.width * 0.8, (value) {
               setState(() {
-                widget.address = value;
+                adresse = value;
               });
-            }, widget.address),
+            }),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 60.0, left: 15, right: 15),

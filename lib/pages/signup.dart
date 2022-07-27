@@ -44,11 +44,15 @@ class _SignupPageState extends State<SignupPage> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 30),
-            child: FormInput("Nom et prénom", size.width * 0.8, (value) {
-              setState(() {
-                mail = value;
-              });
-            }, ''),
+            child: FormInput(
+              "Nom et prénom",
+              size.width * 0.8,
+              (value) {
+                setState(() {
+                  mail = value;
+                });
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 30),
@@ -56,7 +60,7 @@ class _SignupPageState extends State<SignupPage> {
               setState(() {
                 mail = value;
               });
-            }, ''),
+            }),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 30),

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lookmefront/model/offres.dart';
 
 class AuthService {
   Dio dio = new Dio();
@@ -31,4 +32,5 @@ class AuthService {
     dio.options.headers['Authorization'] = 'Bearer $token';
     return await dio.get('https://flutterauth10.herokuapp.com/getinfo');
   }
+
 }

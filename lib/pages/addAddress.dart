@@ -38,7 +38,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
               setState(() {
                 name = nameEdit;
               });
-            }, ''),
+            },),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 35.0, top: 20.0),
@@ -46,7 +46,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
               setState(() {
                 adresse = value;
               });
-            }, ''),
+            },),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 35.0, top: 20.0),
@@ -54,7 +54,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
               setState(() {
                 codePostal = value;
               });
-            }, ''),
+            }, ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 35.0, top: 20.0),
@@ -62,7 +62,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
               setState(() {
                 ville = value;
               });
-            }, ''),
+            }, ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 60.0, left: 15, right: 15),

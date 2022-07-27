@@ -33,8 +33,7 @@ class AddressListPage extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          EditAddressPage("marwa", "adresse de marwa"),
+                      builder: (context) => EditAddressPage(),
                     ));
               },
             ),

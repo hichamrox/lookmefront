@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/carteProfil.dart';
 import 'package:lookmefront/pages/addAddress.dart';
+import 'package:lookmefront/pages/addOffer.dart';
 import 'package:lookmefront/pages/addressList.dart';
 import 'package:lookmefront/pages/orders.dart';
 import 'package:lookmefront/pages/settings.dart';
@@ -76,7 +77,13 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: CarteProfil("Mes locations", "Already have 10 orders", () {}),
+          child: CarteProfil("Mes locations", "Already have 10 orders", (() {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddOfferPage(),
+                ));
+          })),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),

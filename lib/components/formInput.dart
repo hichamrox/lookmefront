@@ -6,9 +6,7 @@ class FormInput extends StatefulWidget {
     this.label,
     this.width,
     this.onChanged,
-    this.text,
   );
-  final String? text;
   final String label;
   final ValueChanged<String>? onChanged;
   final double width;

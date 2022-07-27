@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
               setState(() {
                 name = value;
               });
-            }, ''),
+            }),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 30, bottom: 40),
