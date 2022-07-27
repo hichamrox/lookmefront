@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/button.dart';
 import 'package:lookmefront/components/cartCard.dart';
+import 'package:lookmefront/pages/checkout.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -66,8 +67,18 @@ class _CartPageState extends State<CartPage> {
           Positioned(
               bottom: 5,
               left: 35,
-              child: Button(
-                  "Paiement", true, true, size.width * 0.8, 50, () {}, 5))
+              child: Button("Paiement", true, true, size.width * 0.8, 50, () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CheckoutPage(
+                          "Hicham",
+                          "adresse de hicham",
+                          "0000000000000000",
+                          "Fast (2-3 days)",
+                          95)),
+                );
+              }, 5))
         ],
       ),
     );
