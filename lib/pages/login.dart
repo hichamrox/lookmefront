@@ -53,15 +53,11 @@ class _LoginPageState extends State<LoginPage> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 30),
-            child: FormInput(
-              "Email",
-              size.width * 0.8,
-              (value) {
-                setState(() {
-                  name = value;
-                });
-              },
-            ),
+            child: FormInput("Email", size.width * 0.8, (value) {
+              setState(() {
+                name = value;
+              });
+            }, ''),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 30, bottom: 40),

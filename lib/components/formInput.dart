@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FormInput extends StatefulWidget {
-  FormInput(this.label, this.width, this.onChanged);
+  FormInput(
+    this.label,
+    this.width,
+    this.onChanged,
+    this.text,
+  );
+  final String? text;
   final String label;
   final ValueChanged<String>? onChanged;
   final double width;

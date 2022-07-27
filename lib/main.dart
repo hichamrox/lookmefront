@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lookmefront/pages/boarding.dart';
+import 'package:lookmefront/pages/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BoardingPage(),
+      home: HomePage(),
     );
   }
 }

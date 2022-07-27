@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lookmefront/components/formInput.dart';
-import 'package:lookmefront/pages/addressList.dart';
 
 import '../components/button.dart';
+import '../components/formInput.dart';
+import 'addressList.dart';
 
-class AddAddressPage extends StatefulWidget {
+class EditAddressPage extends StatefulWidget {
+  String name;
+  String address;
+  EditAddressPage(this.name, this.address);
+
   @override
-  State<AddAddressPage> createState() => _AddAddressPageState();
+  _EditAddressPageState createState() => _EditAddressPageState();
 }
 
-class _AddAddressPageState extends State<AddAddressPage> {
+class _EditAddressPageState extends State<EditAddressPage> {
   late String name;
   late String adresse;
-  late String codePostal;
-  late String ville;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,35 +36,19 @@ class _AddAddressPageState extends State<AddAddressPage> {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 35.0, top: 100.0),
-            child: FormInput("Nom et Prénom", size.width * 0.8, (nameEdit) {
+            child: FormInput("Nom et Prénom", size.width * 0.8, (value) {
               setState(() {
-                name = nameEdit;
+                widget.name = value;
               });
-            }, ''),
+            }, widget.name),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 35.0, top: 20.0),
             child: FormInput("Adresse", size.width * 0.8, (value) {
               setState(() {
-                adresse = value;
+                widget.address = value;
               });
-            }, ''),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 35.0, top: 20.0),
-            child: FormInput("Code Postal", size.width * 0.8, (value) {
-              setState(() {
-                codePostal = value;
-              });
-            }, ''),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 35.0, top: 20.0),
-            child: FormInput("Ville", size.width * 0.8, (value) {
-              setState(() {
-                ville = value;
-              });
-            }, ''),
+            }, widget.address),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 60.0, left: 15, right: 15),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/pages/addAddress.dart';
+import 'package:lookmefront/pages/editAddress.dart';
 
 import '../components/addressCard.dart';
 
@@ -25,7 +26,18 @@ class AddressListPage extends StatelessWidget {
       body: Stack(children: [
         ListView(
           children: [
-            AddressCard("Marwa", "adresse de marwa"),
+            AddressCard(
+              "Marwa",
+              "adresse de marwa",
+              () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          EditAddressPage("marwa", "adresse de marwa"),
+                    ));
+              },
+            ),
           ],
         ),
         Positioned(

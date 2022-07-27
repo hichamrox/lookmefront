@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lookmefront/pages/addAddress.dart';
+import 'package:lookmefront/pages/editAddress.dart';
 
 class AddressCard extends StatefulWidget {
   final String name;
   final String address;
-  const AddressCard(this.name, this.address);
+  const AddressCard(this.name, this.address, this.onTapIcon);
+  final VoidCallback onTapIcon;
 
   @override
   State<AddressCard> createState() => _AddressCardState();
@@ -12,6 +15,7 @@ class AddressCard extends StatefulWidget {
 
 class _AddressCardState extends State<AddressCard> {
   bool isChecked = false;
+
   @override
   Widget build(BuildContext context) {
     Color getColor(Set<MaterialState> states) {
@@ -67,9 +71,12 @@ class _AddressCardState extends State<AddressCard> {
                             fontWeight: FontWeight.bold,
                             fontSize: 22),
                       ),
-                      Icon(
-                        Icons.edit_outlined,
-                        size: 33,
+                      InkWell(
+                        child: Icon(
+                          Icons.edit_outlined,
+                          size: 33,
+                        ),
+                        onTap: widget.onTapIcon,
                       )
                     ]),
                 Container(
