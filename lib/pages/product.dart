@@ -7,7 +7,7 @@ class ProductPage extends StatefulWidget {
       this.stars);
   final String img;
   final String label;
-  final String price;
+  final int price;
   final String description;
   final String review;
   final String stars;
@@ -58,7 +58,7 @@ class _ProductPageState extends State<ProductPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 20),
-                  child: Text(widget.price + " €",
+                  child: Text((widget.price * jr).toInt().toString() + " €",
                       style: GoogleFonts.nunitoSans(
                           color: Colors.black,
                           fontWeight: FontWeight.w600,

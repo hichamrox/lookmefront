@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lookmefront/components/itemCard.dart';
 import 'package:lookmefront/pages/cart.dart';
 import 'package:lookmefront/pages/product.dart';
+import 'package:lookmefront/services/authservices.dart';
+
+import '../model/offres.dart';
 
 class AccueilPage extends StatefulWidget {
   const AccueilPage({Key? key}) : super(key: key);
@@ -44,7 +47,45 @@ class _AccueilPageState extends State<AccueilPage> {
             )
           ],
         ),
-        body: GridView.count(
+        body: FutureBuilder<List<Offre>>(
+            future: AuthService().getOffers(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return GridView.builder(
+                    itemCount: snapshot.data?.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2),
+                    itemBuilder: (context, index) {
+                      var offer = (snapshot.data as List<Offre>)[index];
+                      return ItemCard(
+                        height: size.height * 0.3,
+                        width: size.width * 0.2,
+                        img: "assets/images/robeBleu.png",
+                        name: offer.title,
+                        prix: offer.cost.toString(),
+                        onTapPanier: () {},
+                        onTapItem: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProductPage(
+                                    "assets/images/robeBleu.png",
+                                    offer.title,
+                                    offer.cost,
+                                    offer.description,
+                                    "30 reviews",
+                                    "4,5")),
+                          );
+                        },
+                      );
+                    });
+              } else if (snapshot.hasError) {
+                return Text("Error");
+              } else {
+                throw ("Login");
+              }
+            })
+        /*body: GridView.count(
           mainAxisSpacing: 20,
           crossAxisCount: 2,
           children: [
@@ -115,6 +156,7 @@ class _AccueilPageState extends State<AccueilPage> {
               onTapItem: () {},
             ),
           ],
-        ));
+        )*/
+        );
   }
 }

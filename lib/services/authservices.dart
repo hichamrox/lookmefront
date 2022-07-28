@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -33,4 +35,23 @@ class AuthService {
     return await dio.get('https://flutterauth10.herokuapp.com/getinfo');
   }
 
+  Future<List<Offre>> getOffers() async {
+    try {
+      Response<String> response =
+          await dio.get('https://flutterauth10.herokuapp.com/getOffers');
+      print("response:" + response.toString());
+
+      if (response.statusCode == 200) {
+        var result = jsonDecode(response.toString()) as List;
+        var listOffer = result.map(((e) => Offre.fromJson(e))).toList();
+
+        return listOffer;
+      } else {
+        throw Exception(response.statusMessage);
+      }
+    } catch (e) {
+      return [];
+    }
+  }
 }
+//

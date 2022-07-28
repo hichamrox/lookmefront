@@ -22,6 +22,8 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    late int totalCost;
+    
     return Padding(
       padding: const EdgeInsets.only(left: 40),
       child: Container(

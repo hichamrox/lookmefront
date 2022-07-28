@@ -86,8 +86,10 @@ class _LoginPageState extends State<LoginPage> {
           Padding(
             padding: const EdgeInsets.only(top: 40, bottom: 40),
             child: Center(
-              child:
-                  Button("Se connecter", true, true, size.width * 0.7, 50, () {
+              child: Button("Se connecter", true, true, size.width * 0.7, 50,
+                  () async {
+                var data = await AuthService().getOffers();
+                print("login::::::::" + data.toString());
                 AuthService().login(name, password).then((val) {
                   if (val.data['success']) {
                     token = val.data['token'];
@@ -98,6 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                         backgroundColor: Colors.green,
                         textColor: Colors.white,
                         fontSize: 16);
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const HomePage()),

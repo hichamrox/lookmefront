@@ -1,21 +1,20 @@
 import 'dart:convert';
-List<Offre> offreFromJson(String str) => List<Offre>.from(json.decode(str).map((x) => Offre.fromJson(x)));
-String offreToJson(List<Offre> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class Offre {
     Offre({
-        this.id,
-        this.userId,
-        this.title,
-        this.description,
-        this.cost,
-        this.size,
-        this.morphology,
-        this.height,
-        this.category,
-        this.comments,
-        this.createdAt,
-        this.updatedAt,
-        this.v,
+        required this.id,
+        required this.userId,
+        required this.title,
+        required this.description,
+        required this.cost,
+        required this.size,
+        required this.morphology,
+        required this.height,
+        required this.category,
+        required this.comments,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.v,
     });
     String id;
     List<String> userId;
