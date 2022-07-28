@@ -4,10 +4,12 @@ import 'package:lookmefront/components/carteProfil.dart';
 import 'package:lookmefront/pages/addAddress.dart';
 import 'package:lookmefront/pages/addOffer.dart';
 import 'package:lookmefront/pages/addressList.dart';
+import 'package:lookmefront/pages/locationList.dart';
 import 'package:lookmefront/pages/orders.dart';
 import 'package:lookmefront/pages/settings.dart';
 
 import '../components/button.dart';
+import '../services/authservices.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -81,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AddOfferPage(),
+                  builder: (context) => LocationListPage(),
                 ));
           })),
         ),

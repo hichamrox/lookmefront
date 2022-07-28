@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lookmefront/components/filePcker.dart';
 import 'package:lookmefront/pages/profile.dart';
 
 import '../components/formInput.dart';
@@ -107,6 +108,7 @@ class _AddOfferPageState extends State<AddOfferPage> {
                 },
               ),
             ),
+            FilesPicker()
           ],
         ));
   }

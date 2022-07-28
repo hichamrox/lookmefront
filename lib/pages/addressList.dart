@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lookmefront/model/adress.dart';
 import 'package:lookmefront/pages/addAddress.dart';
 import 'package:lookmefront/pages/editAddress.dart';
 
 import '../components/addressCard.dart';
+import '../services/authservices.dart';
 
 class AddressListPage extends StatelessWidget {
   const AddressListPage();
@@ -24,21 +26,34 @@ class AddressListPage extends StatelessWidget {
         ),
       ),
       body: Stack(children: [
-        ListView(
-          children: [
-            AddressCard(
-              "Marwa",
-              "adresse de marwa",
-              () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditAddressPage(),
-                    ));
-              },
-            ),
-          ],
-        ),
+        FutureBuilder<List<Adress>>(
+            future: AuthService().getAdress('629032e2b4b3b5c4d33eeb77'),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                    itemCount: snapshot.data?.length,
+                    itemBuilder: (context, index) {
+                      var adress = (snapshot.data as List<Adress>)[index];
+                      return AddressCard(
+                        adress.city,
+                        adress.adress,
+                        adress.cp.toString(),
+                        () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditAddressPage(),
+                              ));
+                        },
+                      );
+                    });
+              } else if (snapshot.hasError) {
+                return Text("Error");
+              } else {
+                throw ("Login");
+              }
+            }),
+
         Positioned(
             bottom: 10,
             right: 10,

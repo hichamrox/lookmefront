@@ -4,9 +4,10 @@ import 'package:lookmefront/pages/addAddress.dart';
 import 'package:lookmefront/pages/editAddress.dart';
 
 class AddressCard extends StatefulWidget {
-  final String name;
+  final String city;
   final String address;
-  const AddressCard(this.name, this.address, this.onTapIcon);
+  final String cp;
+  const AddressCard(this.city, this.address, this.cp, this.onTapIcon);
   final VoidCallback onTapIcon;
 
   @override
@@ -65,7 +66,7 @@ class _AddressCardState extends State<AddressCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.name,
+                        widget.city,
                         style: GoogleFonts.nunitoSans(
                             color: Color.fromARGB(255, 23, 23, 23),
                             fontWeight: FontWeight.bold,
@@ -85,12 +86,24 @@ class _AddressCardState extends State<AddressCard> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 18.0),
-                  child: Text(
-                    widget.address,
-                    style: GoogleFonts.nunitoSans(
-                        color: Color.fromARGB(255, 81, 80, 80),
-                        fontWeight: FontWeight.normal,
-                        fontSize: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.address,
+                        style: GoogleFonts.nunitoSans(
+                            color: Color.fromARGB(255, 81, 80, 80),
+                            fontWeight: FontWeight.normal,
+                            fontSize: 20),
+                      ),
+                      Text(
+                        widget.cp,
+                        style: GoogleFonts.nunitoSans(
+                            color: Color.fromARGB(255, 81, 80, 80),
+                            fontWeight: FontWeight.normal,
+                            fontSize: 20),
+                      ),
+                    ],
                   ),
                 ),
               ],

@@ -28,7 +28,7 @@ class OrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Order No" + orderNumber,
+                      "Order No: " + orderNumber,
                       style: GoogleFonts.nunitoSans(
                           color: Color.fromARGB(255, 14, 13, 13),
                           fontWeight: FontWeight.w600,
