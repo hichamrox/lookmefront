@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo Library Access Warning</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera Library Access Warning</string>
 	<key>CFBundleDisplayName</key>
 	<string>Lookmefront</string>
 	<key>CFBundleExecutable</key>
@@ -43,16 +47,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSPhotoLibraryUsageDescription</key>
-
-<string>Need to upload image</string>
-
-<key>NSCameraUsageDescription</key>
-
-<string>Need to upload image</string>
-
-<key>NSMicrophoneUsageDescription</key>
-
-<string>Need to upload image</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 </dict>
 </plist>
