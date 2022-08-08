@@ -5,6 +5,7 @@ import 'package:lookmefront/pages/home.dart';
 import 'package:lookmefront/pages/signup.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lookmefront/services/authservices.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../components/button.dart';
 import '../components/mdpInput.dart';
 
@@ -17,6 +18,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   var name, password, token;
+
+  addStringToSF(token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', token);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -93,6 +100,8 @@ class _LoginPageState extends State<LoginPage> {
                 AuthService().login(name, password).then((val) {
                   if (val.data['success']) {
                     token = val.data['token'];
+                    addStringToSF(token);
+                    print(token);
                     Fluttertoast.showToast(
                         msg: val.data['msg'],
                         toastLength: Toast.LENGTH_SHORT,
@@ -100,7 +109,6 @@ class _LoginPageState extends State<LoginPage> {
                         backgroundColor: Colors.green,
                         textColor: Colors.white,
                         fontSize: 16);
-
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const HomePage()),

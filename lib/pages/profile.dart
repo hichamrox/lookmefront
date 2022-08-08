@@ -5,8 +5,10 @@ import 'package:lookmefront/pages/addAddress.dart';
 import 'package:lookmefront/pages/addOffer.dart';
 import 'package:lookmefront/pages/addressList.dart';
 import 'package:lookmefront/pages/locationList.dart';
+import 'package:lookmefront/pages/login.dart';
 import 'package:lookmefront/pages/orders.dart';
 import 'package:lookmefront/pages/settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/button.dart';
 import '../services/authservices.dart';
@@ -19,6 +21,11 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  removeValues() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("token");
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -30,10 +37,19 @@ class _ProfilePageState extends State<ProfilePage> {
           size: 40,
         ),
         actions: [
-          Icon(
-            Icons.logout,
-            color: Color.fromARGB(255, 81, 79, 79),
-            size: 30,
+          GestureDetector(
+            onTap: () {
+              removeValues();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+            child: Icon(
+              Icons.logout,
+              color: Color.fromARGB(255, 81, 79, 79),
+              size: 30,
+            ),
           )
         ],
         foregroundColor: Colors.black,

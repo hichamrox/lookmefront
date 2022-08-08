@@ -3,6 +3,7 @@ import 'package:lookmefront/components/itemCard.dart';
 import 'package:lookmefront/pages/cart.dart';
 import 'package:lookmefront/pages/product.dart';
 import 'package:lookmefront/services/authservices.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/offres.dart';
 
@@ -14,6 +15,13 @@ class AccueilPage extends StatefulWidget {
 }
 
 class _AccueilPageState extends State<AccueilPage> {
+  getStringValuesSF() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    String? stringValue = prefs.getString('token');
+    return print(stringValue);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -63,7 +71,9 @@ class _AccueilPageState extends State<AccueilPage> {
                         img: "assets/images/robeBleu.png",
                         name: offer.title,
                         prix: offer.cost.toString(),
-                        onTapPanier: () {},
+                        onTapPanier: () {
+                          getStringValuesSF();
+                        },
                         onTapItem: () {
                           Navigator.push(
                             context,
