@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/button.dart';
 import 'package:lookmefront/pages/profile.dart';
+import 'package:lookmefront/services/authservices.dart';
 
 class OrderCard extends StatelessWidget {
   final String orderNumber;
   final String date;
   final int dayNumber;
   final int totalCost;
-  const OrderCard(this.orderNumber, this.date, this.dayNumber, this.totalCost);
+  final String offerId;
+  const OrderCard(this.orderNumber, this.date, this.dayNumber, this.totalCost,
+      this.offerId);
 
   @override
   Widget build(BuildContext context) {
@@ -72,12 +75,10 @@ class OrderCard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0, left: 15, right: 15),
-                child: Button("Détail", true, true, size.width * 0.25, 40, () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProfilePage(),
-                      ));
+                child: Button("Contact", true, true, size.width * 0.25, 40,
+                    () async {
+                  var data = await AuthService().getOfferById(offerId);
+                  print(data);
                 }, 5),
               )
             ],

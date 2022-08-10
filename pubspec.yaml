@@ -41,6 +41,8 @@ dependencies:
   shared_preferences: ^2.0.15
   meta: ^1.7.0
   image_picker: ^0.8.5+3
+  socket_io_client: ^2.0.0
+  jwt_decode: ^0.3.1
 
 dev_dependencies:
   flutter_test:

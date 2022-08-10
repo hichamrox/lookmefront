@@ -43,7 +43,7 @@ class LocationListPage extends StatelessWidget {
                 } else if (snapshot.hasError) {
                   return Text("Error");
                 } else {
-                  throw ("Login");
+                  return const CircularProgressIndicator();
                 }
               }),
           Positioned(

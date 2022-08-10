@@ -40,9 +40,13 @@ class _ProfilePageState extends State<ProfilePage> {
           GestureDetector(
             onTap: () {
               removeValues();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
+              Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return LoginPage();
+                  },
+                ),
+                (_) => false,
               );
             },
             child: Icon(

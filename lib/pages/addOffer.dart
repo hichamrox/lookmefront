@@ -52,7 +52,7 @@ class _AddOfferPageState extends State<AddOfferPage> {
                 "Description",
                 size.width * 0.8,
                 (value) {
-                  print(description);
+                  // print(description);
                   setState(() {
                     description = value;
                   });
@@ -101,7 +101,7 @@ class _AddOfferPageState extends State<AddOfferPage> {
                 "Morphologie",
                 size.width * 0.8,
                 (value) {
-                  print(description);
+                  // print(description);
                   setState(() {
                     morphology = value;
                   });

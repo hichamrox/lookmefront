@@ -50,10 +50,9 @@ class AddressListPage extends StatelessWidget {
               } else if (snapshot.hasError) {
                 return Text("Error");
               } else {
-                throw ("Login");
+                return const CircularProgressIndicator();
               }
             }),
-
         Positioned(
             bottom: 10,
             right: 10,

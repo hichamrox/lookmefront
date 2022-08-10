@@ -92,7 +92,7 @@ class _AccueilPageState extends State<AccueilPage> {
               } else if (snapshot.hasError) {
                 return Text("Error");
               } else {
-                throw ("Login");
+                return const CircularProgressIndicator();
               }
             })
         /*body: GridView.count(

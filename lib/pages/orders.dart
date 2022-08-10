@@ -39,12 +39,13 @@ class OrdersPage extends StatelessWidget {
                           order.id.substring(order.id.length - 8),
                           order.createdAt.toString().substring(0, 10),
                           order.days,
-                          order.cost);
+                          order.cost,
+                          order.offerId);
                     });
               } else if (snapshot.hasError) {
                 return Text("Error");
               } else {
-                throw ("Login");
+                return const CircularProgressIndicator();
               }
             }));
   }
