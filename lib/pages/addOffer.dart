@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/filePcker.dart';
+import 'package:lookmefront/pages/locationList.dart';
 import 'package:lookmefront/pages/profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../components/button.dart';
 import '../components/formInput.dart';
+import '../services/authservices.dart';
 
 class AddOfferPage extends StatefulWidget {
   @override
@@ -11,12 +15,17 @@ class AddOfferPage extends StatefulWidget {
 }
 
 class _AddOfferPageState extends State<AddOfferPage> {
-  late String title;
-  late String description;
-  late String cost;
-  late String size1;
-  late String category;
-  late String morphology;
+  getStringToSF() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? image = prefs.getString('image');
+    print(image);
+    return image;
+  }
+
+  var title, description, cost, size1, height, category, morphology;
+  List<String> morphologys = ["A", "V", "H", "8"];
+  List<String> sizes = ["XS", "S", "M", "L", "XL", "XXL"];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -86,29 +95,112 @@ class _AddOfferPageState extends State<AddOfferPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: FormInput(
-                "Taille",
+                "Heigth",
                 size.width * 0.8,
                 (value) {
                   setState(() {
-                    size1 = value;
+                    height = value;
                   });
                 },
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: FormInput(
-                "Morphologie",
-                size.width * 0.8,
-                (value) {
-                  // print(description);
-                  setState(() {
-                    morphology = value;
-                  });
-                },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Taille",
+                    style: GoogleFonts.nunitoSans(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20),
+                  ),
+                  Container(
+                    width: size.width * 0.65,
+                    child: DropdownButton(
+                      //size.width * 0.4,
+                      isExpanded: true,
+                      value: size1,
+                      icon: Icon(Icons.keyboard_arrow_down),
+                      items: sizes.map((String items) {
+                        return DropdownMenuItem(
+                            value: items, child: Text(items));
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          size1 = newValue;
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
-            FilesPicker()
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Morphologie",
+                    style: GoogleFonts.nunitoSans(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20),
+                  ),
+                  Container(
+                    width: size.width * 0.5,
+                    child: DropdownButton(
+                      //size.width * 0.4,
+                      isExpanded: true,
+                      value: morphology,
+                      icon: Icon(Icons.keyboard_arrow_down),
+                      items: morphologys.map((String items) {
+                        return DropdownMenuItem(
+                            value: items, child: Text(items));
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          morphology = newValue;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            FilesPicker(),
+            Padding(
+              padding: const EdgeInsets.only(top: 60.0, left: 15, right: 15),
+              child: Button(
+                  "Sauvegarder l'article", true, true, size.width * 0.8, 50,
+                  () async {
+                var data = await AuthService()
+                    .getOffreById('629032e2b4b3b5c4d33eeb77');
+                AuthService()
+                    .addOffer(
+                        '629032e2b4b3b5c4d33eeb77',
+                        title,
+                        description,
+                        cost,
+                        size1,
+                        morphology,
+                        height,
+                        category,
+                        await getStringToSF())
+                    .then((val) {
+                  if (val.data['success']) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LocationListPage(),
+                      ),
+                    );
+                  }
+                });
+              }, 5),
+            )
           ],
         ));
   }

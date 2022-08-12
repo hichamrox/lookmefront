@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lookmefront/components/button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FilesPicker extends StatefulWidget {
   const FilesPicker({Key? key}) : super(key: key);
@@ -14,6 +16,11 @@ class FilesPicker extends StatefulWidget {
 
 class _FilesPickerState extends State<FilesPicker> {
   File? image;
+  String? imageURL;
+  addStringToSF(imageUrl) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('image', imageUrl);
+  }
 
   Future upload() async {
     if (image == null)
@@ -28,7 +35,8 @@ class _FilesPickerState extends State<FilesPicker> {
       try {
         var response = await dio
             .post('https://flutterauth10.herokuapp.com/upload', data: formData);
-        print(response.data);
+        var res = (response.data.toString().split(" ")[1]);
+        addStringToSF(res);
       } on DioError catch (e) {
         return ("e");
       }
@@ -37,38 +45,35 @@ class _FilesPickerState extends State<FilesPicker> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       constraints: BoxConstraints(maxWidth: 400),
       padding: EdgeInsets.all(32),
       alignment: Alignment.center,
-      child: Column(
+      child: Row(
         children: [
-          ElevatedButton(
-            child: Text("Importer image"),
-            onPressed: () async {
-              try {
-                final image =
-                    await ImagePicker().pickImage(source: ImageSource.gallery);
-                if (image == null) return;
-                final imageTemp = File(image.path);
-                setState(() => this.image = imageTemp);
-                upload();
-              } on PlatformException catch (e) {
-                print('Failed to pick image $e');
-              }
-            },
+          Button("Choisir photo", false, true, size.width * 0.4, 40, () async {
+            try {
+              final image =
+                  await ImagePicker().pickImage(source: ImageSource.gallery);
+              if (image == null) return;
+              final imageTemp = File(image.path);
+              setState(() => this.image = imageTemp);
+              upload();
+            } on PlatformException catch (e) {
+              print('Failed to pick image $e');
+            }
+          }, 5),
+          Container(
+            height: 60,
+            child: image != null
+                ? Image.file(
+                    image!,
+                  )
+                : Text("no image available"),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          image != null ? Image.file(image!) : Text("no image available"),
         ],
       ),
     );
   }
 }
-
-// FilePickerResult? result = await FilePicker.platform.pickFiles();
-//           if (result == null) return;
-//           PlatformFile file = result.files.single;
-//           upload(file);

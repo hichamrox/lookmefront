@@ -74,7 +74,7 @@ class AuthService {
 
   addAdress(userId, adress, cp, city) async {
     return await dio.post('https://flutterauth10.herokuapp.com/addAdress',
-        data: {"userId": userId, "adress": adress, "cp": cp, "city": city},
+        data: {"id": userId, "adress": adress, "cp": cp, "city": city},
         options: Options(contentType: Headers.formUrlEncodedContentType));
   }
 
