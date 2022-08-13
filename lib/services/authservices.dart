@@ -102,7 +102,7 @@ class AuthService {
     try {
       Response<String> response =
           await dio.get('https://flutterauth10.herokuapp.com/getOffers');
-      print("response:" + response.toString());
+      // print("response:" + response.toString());
 
       if (response.statusCode == 200) {
         var result = jsonDecode(response.toString()) as List;
@@ -155,7 +155,7 @@ class AuthService {
     try {
       Response<String> response = await dio.get(
           'https://flutterauth10.herokuapp.com/getOffersByUserId?id=' + id);
-      print("liste de locations" + response.toString());
+      // print("liste de locations" + response.toString());
       if (response.statusCode == 200) {
         var result = jsonDecode(response.toString()) as List;
         var listLocation = result.map((e) => Offre.fromJson(e)).toList();
@@ -172,7 +172,7 @@ class AuthService {
     try {
       Response<String> response = await dio
           .get('https://flutterauth10.herokuapp.com/getChatsByUserId?id=' + id);
-      // print("liste d'adresse" + response.toString());
+      // print("liste d'chat" + response.toString());
       if (response.statusCode == 200) {
         var result = jsonDecode(response.toString()) as List;
         var listChat = result.map((e) => Chat.fromJson(e)).toList();

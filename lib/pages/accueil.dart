@@ -18,7 +18,7 @@ class _AccueilPageState extends State<AccueilPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //Return String
     String? stringValue = prefs.getString('token');
-    return print(stringValue);
+    // return print(stringValue);
   }
 
   @override
