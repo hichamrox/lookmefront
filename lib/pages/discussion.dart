@@ -39,7 +39,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
         body: Stack(children: [
           FutureBuilder<List<Chat>>(
               future:
-                  AuthService().getChatsByUserId('629032e2b4b3b5c4d33eeb77'),
+                  AuthService().getChatsByUserId('62f7e2f945aa80bae2225b3e'),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
