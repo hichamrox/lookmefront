@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   void _selectTab(String tabItem, int index) {
     if (tabItem == currentPage) {
       _navigatorKeys[tabItem]?.currentState?.popUntil((route) => route.isFirst);
-      print(_navigatorKeys[tabItem]);
+      // print(_navigatorKeys[tabItem]);
     } else {
       setState(() {
         currentPage = pageKeys[index];

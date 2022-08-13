@@ -61,7 +61,7 @@ class _FilesPickerState extends State<FilesPicker> {
               setState(() => this.image = imageTemp);
               upload();
             } on PlatformException catch (e) {
-              print('Failed to pick image $e');
+              // print('Failed to pick image $e');
             }
           }, 5),
           Container(

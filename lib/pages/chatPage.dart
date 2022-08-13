@@ -11,7 +11,8 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 class ChatPage extends StatefulWidget {
   final String sellerId;
   final String costumerId;
-  const ChatPage(this.sellerId, this.costumerId);
+  final String orderId;
+  const ChatPage(this.sellerId, this.costumerId, this.orderId);
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -39,9 +40,10 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   _addMessage(msg) {
-    List<Message> cloned = messages;
-    cloned.add(Message.fromJson(msg));
+    print(msg);
     setState(() {
+      List<Message> cloned = List.from(messages);
+      cloned.add(Message.fromJson(msg));
       messages = cloned;
     });
   }
@@ -62,7 +64,8 @@ class _ChatPageState extends State<ChatPage> {
     _socket.emit('message', {
       'msg': msgController.text.trim(),
       'senderId': widget.costumerId,
-      'receiverId': widget.sellerId
+      'receiverId': widget.sellerId,
+      'orderId': widget.orderId
     });
   }
 

@@ -39,19 +39,21 @@ class _DiscussionPageState extends State<DiscussionPage> {
         body: Stack(children: [
           FutureBuilder<List<Chat>>(
               future:
-                  AuthService().getChatsByUserId('62f7e2f945aa80bae2225b3e'),
+                  AuthService().getChatsByUserId('629032e2b4b3b5c4d33eeb77'),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
                       itemCount: snapshot.data?.length,
                       itemBuilder: (context, index) {
                         var chat = (snapshot.data as List<Chat>)[index];
+                        // print("--------------------- test: " +
+                        //     snapshot.data.toString());
                         return LocationCardContact(chat.title, chat.image, () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    ChatPage(chat.sellerId, chat.costumerId)),
+                                builder: (context) => ChatPage(chat.sellerId,
+                                    chat.costumerId, chat.orderId)),
                           );
                         });
                       });
