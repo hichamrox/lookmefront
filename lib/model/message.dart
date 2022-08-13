@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final message = messageFromJson(jsonString);
+
 import 'dart:convert';
 
 List<Message> messageFromJson(String str) =>
@@ -12,6 +16,7 @@ class Message {
     required this.msg,
     required this.receiverId,
     required this.senderId,
+    required this.orderId,
     required this.createdAt,
     required this.updatedAt,
     required this.v,
@@ -21,6 +26,7 @@ class Message {
   String msg;
   String receiverId;
   String senderId;
+  String orderId;
   DateTime createdAt;
   DateTime updatedAt;
   int v;
@@ -30,6 +36,7 @@ class Message {
         msg: json["msg"],
         receiverId: json["receiverId"],
         senderId: json["senderId"],
+        orderId: json["orderId"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         v: json["__v"],
@@ -40,6 +47,7 @@ class Message {
         "msg": msg,
         "receiverId": receiverId,
         "senderId": senderId,
+        "orderId": orderId,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "__v": v,

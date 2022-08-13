@@ -20,6 +20,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List<Message> messages = [];
+
   final IO.Socket _socket = IO.io("https://flutterauth10.herokuapp.com/",
       IO.OptionBuilder().setTransports(['websocket']).build());
 
@@ -33,7 +34,9 @@ class _ChatPageState extends State<ChatPage> {
   _addsMessages(List<dynamic> data) {
     print(data);
     setState(() {
-      messages = data.map((element) {
+      messages = data
+          .where((json) => json["orderId"] == widget.orderId)
+          .map((element) {
         return Message.fromJson(element);
       }).toList();
     });
@@ -42,9 +45,13 @@ class _ChatPageState extends State<ChatPage> {
   _addMessage(msg) {
     print(msg);
     setState(() {
-      List<Message> cloned = List.from(messages);
-      cloned.add(Message.fromJson(msg));
-      messages = cloned;
+      var message = Message.fromJson(msg);
+      if (message.orderId == widget.orderId) {
+        List<Message> cloned = List.from(messages);
+
+        cloned.add(message);
+        messages = cloned;
+      }
     });
   }
 
