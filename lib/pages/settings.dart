@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/carteProfil.dart';
+import 'package:lookmefront/pages/contactPage.dart';
+import 'package:lookmefront/pages/editPassword.dart';
+import 'package:lookmefront/pages/faqPage.dart';
 
 class SittingPage extends StatefulWidget {
   //final VoidCallback onTap;
@@ -64,14 +67,25 @@ class _SittingPageState extends State<SittingPage> {
                       fontWeight: FontWeight.w500,
                       fontSize: 18),
                 ),
-                Icon(
-                  Icons.mode_edit_outlined,
-                  size: 35,
-                )
+                GestureDetector(
+                    onTap: (() {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditPasswordPage(),
+                          ));
+                    }),
+                    child: Icon(Icons.arrow_forward_ios))
               ],
             ),
           ),
-          CarteProfil("Mot de passe", "**************", () {}),
+          CarteProfil("Mot de passe", "**************", () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditPasswordPage(),
+                ));
+          }),
           Padding(
             padding: const EdgeInsets.only(top: 18.0, bottom: 12, left: 10),
             child: Text(
@@ -169,7 +183,15 @@ class _SittingPageState extends State<SittingPage> {
                         fontWeight: FontWeight.normal,
                         fontSize: 20),
                   ),
-                  Icon(Icons.arrow_forward_ios),
+                  GestureDetector(
+                      onTap: (() {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FaqPage(),
+                            ));
+                      }),
+                      child: Icon(Icons.arrow_forward_ios)),
                 ],
               ),
             ),
@@ -187,7 +209,15 @@ class _SittingPageState extends State<SittingPage> {
                         fontWeight: FontWeight.normal,
                         fontSize: 20),
                   ),
-                  Icon(Icons.arrow_forward_ios),
+                  GestureDetector(
+                      onTap: (() {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ContactPage(),
+                            ));
+                      }),
+                      child: Icon(Icons.arrow_forward_ios))
                 ],
               ),
             ),
