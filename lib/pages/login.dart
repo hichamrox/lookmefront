@@ -17,7 +17,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var name, password, token;
+  var email, password, token;
 
   addStringToSF(token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.only(left: 30),
                 child: FormInput("Email", size.width * 0.8, (value) {
                   setState(() {
-                    name = value;
+                    email = value;
                   });
                 }),
               ),
@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                           () async {
                     var data = await AuthService().getOffers();
                     // print("login::::::::" + data.toString());
-                    AuthService().login(name, password).then((val) {
+                    AuthService().login(email, password).then((val) {
                       if (val.data['success']) {
                         token = val.data['token'];
                         addStringToSF(token);

@@ -11,10 +11,10 @@ import 'package:lookmefront/model/order.dart';
 class AuthService {
   Dio dio = new Dio();
 
-  login(name, password) async {
+  login(email, password) async {
     try {
       return await dio.post('https://flutterauth10.herokuapp.com/authenticate',
-          data: {"name": name, "password": password},
+          data: {"email": email, "password": password},
           options: Options(contentType: Headers.formUrlEncodedContentType));
     } on DioError catch (e) {
       Fluttertoast.showToast(
@@ -27,9 +27,9 @@ class AuthService {
     }
   }
 
-  addUser(name, password) async {
+  addUser(email, name, password) async {
     return await dio.post('https://flutterauth10.herokuapp.com/adduser',
-        data: {"name": name, "password": password},
+        data: {"email": email, "name": name, "password": password},
         options: Options(contentType: Headers.formUrlEncodedContentType));
   }
 
