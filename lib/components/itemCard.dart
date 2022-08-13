@@ -23,7 +23,7 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late int totalCost;
-    
+
     return Padding(
       padding: const EdgeInsets.only(left: 40),
       child: Container(
@@ -36,7 +36,11 @@ class ItemCard extends StatelessWidget {
               onTap: onTapItem,
               child: Stack(
                 children: [
-                  Container(height: 140, child: Image.asset(img)),
+                  Container(
+                      height: 140,
+                      child: Image.network(
+                        img,
+                      )),
                   Positioned(
                     child: GestureDetector(
                       child: Image.asset("assets/images/petitPanier.png"),

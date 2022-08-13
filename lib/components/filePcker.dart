@@ -35,7 +35,7 @@ class _FilesPickerState extends State<FilesPicker> {
       try {
         var response = await dio
             .post('https://flutterauth10.herokuapp.com/upload', data: formData);
-        var res = (response.data.toString().split(" ")[1]);
+        var res = (response.data.toString().split(" ")[1].split("}")[0]);
         addStringToSF(res);
       } on DioError catch (e) {
         return ("e");

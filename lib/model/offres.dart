@@ -1,9 +1,16 @@
 import 'dart:convert';
 
+List<Offre> offreFromJson(String str) =>
+    List<Offre>.from(json.decode(str).map((x) => Offre.fromJson(x)));
+
+String offreToJson(List<Offre> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class Offre {
   Offre({
     required this.id,
     required this.userId,
+    required this.image,
     required this.title,
     required this.description,
     required this.cost,
@@ -16,8 +23,10 @@ class Offre {
     required this.updatedAt,
     required this.v,
   });
+
   String id;
   String userId;
+  String image;
   String title;
   String description;
   int cost;
@@ -29,9 +38,11 @@ class Offre {
   DateTime createdAt;
   DateTime updatedAt;
   int v;
+
   factory Offre.fromJson(Map<String, dynamic> json) => Offre(
         id: json["_id"],
         userId: json["userId"],
+        image: json["image"],
         title: json["title"],
         description: json["description"],
         cost: json["cost"],
@@ -44,9 +55,11 @@ class Offre {
         updatedAt: DateTime.parse(json["updatedAt"]),
         v: json["__v"],
       );
+
   Map<String, dynamic> toJson() => {
         "_id": id,
         "userId": userId,
+        "image": image,
         "title": title,
         "description": description,
         "cost": cost,

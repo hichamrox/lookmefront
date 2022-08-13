@@ -37,7 +37,7 @@ class _ProductPageState extends State<ProductPage> {
                   borderRadius: new BorderRadius.only(
                     bottomLeft: const Radius.circular(40.0),
                   ),
-                  child: Image.asset(
+                  child: Image.network(
                     widget.img,
                     scale: 0.5,
                   ),

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lookmefront/components/itemCard.dart';
+import 'package:lookmefront/model/offres.dart';
 import 'package:lookmefront/pages/cart.dart';
 import 'package:lookmefront/pages/product.dart';
 import 'package:lookmefront/services/authservices.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../model/offres.dart';
 
 class AccueilPage extends StatefulWidget {
   const AccueilPage({Key? key}) : super(key: key);
@@ -57,7 +56,7 @@ class _AccueilPageState extends State<AccueilPage> {
         ),
         body: FutureBuilder<List<Offre>>(
             future: AuthService().getOffers(),
-            builder: (context, snapshot) {
+            builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 return GridView.builder(
                     itemCount: snapshot.data?.length,
@@ -65,10 +64,11 @@ class _AccueilPageState extends State<AccueilPage> {
                         crossAxisCount: 2),
                     itemBuilder: (context, index) {
                       var offer = (snapshot.data as List<Offre>)[index];
+                      print(offer.image);
                       return ItemCard(
                         height: size.height * 0.3,
                         width: size.width * 0.2,
-                        img: "assets/images/robeBleu.png",
+                        img: offer.image,
                         name: offer.title,
                         prix: offer.cost.toString(),
                         onTapPanier: () {
@@ -79,7 +79,7 @@ class _AccueilPageState extends State<AccueilPage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ProductPage(
-                                    "assets/images/robeBleu.png",
+                                    offer.image,
                                     offer.title,
                                     offer.cost,
                                     offer.description,
