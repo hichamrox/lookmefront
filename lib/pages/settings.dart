@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/carteProfil.dart';
 import 'package:lookmefront/pages/contactPage.dart';
+import 'package:lookmefront/pages/editEmail.dart';
 import 'package:lookmefront/pages/editPassword.dart';
+import 'package:lookmefront/pages/editPersonnalInformations.dart';
 import 'package:lookmefront/pages/faqPage.dart';
 
 class SittingPage extends StatefulWidget {
@@ -53,8 +55,20 @@ class _SittingPageState extends State<SittingPage> {
               ],
             ),
           ),
-          CarteProfil("Nom et Prénom", "Marwa IBKH", () {}),
-          CarteProfil("E-mail", "Marwa@test.fr", () {}),
+          CarteProfil("Nom et Prénom", "Marwa IBKH", () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditInformationsPage(),
+                ));
+          }),
+          CarteProfil("E-mail", "Marwa@test.fr", () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditEmailPage(),
+                ));
+          }),
           Padding(
             padding: const EdgeInsets.only(top: 18.0, bottom: 12, left: 10),
             child: Row(

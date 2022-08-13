@@ -24,7 +24,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
         title: Text(
-          "FAQ",
+          "Changer Mot de Passe",
           style: GoogleFonts.merriweather(
               color: Color.fromARGB(255, 8, 8, 8),
               fontWeight: FontWeight.w600,

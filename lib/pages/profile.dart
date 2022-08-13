@@ -71,9 +71,9 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Row(
             children: [
               CircleAvatar(
-                child: Image.network(
+                backgroundImage: NetworkImage(
                     "https://res.cloudinary.com/dshuazgaz/image/upload/v1605731267/bpayfekmwaruliopixxw.png"),
-                radius: 50,
+                radius: 40,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

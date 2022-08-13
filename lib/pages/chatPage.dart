@@ -19,7 +19,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List<Message> messages = [];
-  final IO.Socket _socket = IO.io("http://localhost:3000/",
+  final IO.Socket _socket = IO.io("https://flutterauth10.herokuapp.com/",
       IO.OptionBuilder().setTransports(['websocket']).build());
 
   getStringValuesSF() async {
