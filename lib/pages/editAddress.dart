@@ -6,6 +6,8 @@ import '../components/formInput.dart';
 import 'addressList.dart';
 
 class EditAddressPage extends StatefulWidget {
+  final userId;
+  EditAddressPage(this.userId);
   @override
   _EditAddressPageState createState() => _EditAddressPageState();
 }
@@ -68,7 +70,7 @@ class _EditAddressPageState extends State<EditAddressPage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AddressListPage(),
+                    builder: (context) => AddressListPage(widget.userId),
                   ));
             }, 5),
           )

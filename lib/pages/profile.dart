@@ -27,23 +27,14 @@ class _ProfilePageState extends State<ProfilePage> {
     prefs.remove("userData");
   }
 
-  getName() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? name = prefs.getString('name');
-    return name;
-  }
-
-  getEmail() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? email = prefs.getString('email');
-    return email;
-  }
-
   Future<String> getInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String email = prefs.getString('email').toString();
     String name = prefs.getString('name').toString();
-    return name + "," + email;
+    String userId = prefs.getString('userId').toString();
+    String image = prefs.getString('image').toString();
+
+    return name + "," + email + "," + userId + "," + image;
   }
 
   @override
@@ -98,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Stack(children: [
                         CircleAvatar(
                           backgroundImage: NetworkImage(
-                              "https://res.cloudinary.com/dshuazgaz/image/upload/v1605731267/bpayfekmwaruliopixxw.png"),
+                              snapshot.data.toString().split(",")[3]),
                           radius: 40,
                         ),
                         Positioned(
@@ -151,7 +142,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LocationListPage(),
+                          builder: (context) => LocationListPage(
+                              snapshot.data.toString().split(",")[2]),
                         ));
                   })),
                 ),
@@ -162,7 +154,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => OrdersPage(),
+                          builder: (context) => OrdersPage(
+                              snapshot.data.toString().split(",")[2]),
                         ));
                   })),
                 ),
@@ -173,7 +166,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AddressListPage(),
+                          builder: (context) => AddressListPage(
+                              snapshot.data.toString().split(",")[2]),
                         ));
                   })),
                 ),
@@ -194,7 +188,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => SittingPage(),
+                          builder: (context) => SittingPage(
+                              snapshot.data.toString().split(",")[2],
+                              snapshot.data.toString().split(",")[0],
+                              snapshot.data.toString().split(",")[1]),
                         ));
                   })),
                 ),

@@ -7,6 +7,8 @@ import '../components/button.dart';
 import '../services/authservices.dart';
 
 class AddAddressPage extends StatefulWidget {
+  final userId;
+  AddAddressPage(this.userId);
   @override
   State<AddAddressPage> createState() => _AddAddressPageState();
 }
@@ -71,16 +73,15 @@ class _AddAddressPageState extends State<AddAddressPage> {
             child: Button(
                 "Sauvegarder l'adresse", true, true, size.width * 0.8, 50,
                 () async {
-              var data =
-                  await AuthService().getAdress('629032e2b4b3b5c4d33eeb77');
+              var data = await AuthService().getAdress(widget.userId);
               AuthService()
-                  .addAdress('629032e2b4b3b5c4d33eeb77', adress, cp, city)
+                  .addAdress(widget.userId, adress, cp, city)
                   .then((val) {
                 if (val.data['success']) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AddressListPage(),
+                      builder: (context) => AddressListPage(widget.userId),
                     ),
                   );
                 }

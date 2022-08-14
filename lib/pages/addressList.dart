@@ -8,7 +8,8 @@ import '../components/addressCard.dart';
 import '../services/authservices.dart';
 
 class AddressListPage extends StatefulWidget {
-  const AddressListPage();
+  final userId;
+  AddressListPage(this.userId);
 
   @override
   State<AddressListPage> createState() => _AddressListPageState();
@@ -32,7 +33,7 @@ class _AddressListPageState extends State<AddressListPage> {
       ),
       body: Stack(children: [
         FutureBuilder<List<Adress>>(
-            future: AuthService().getAdress('629032e2b4b3b5c4d33eeb77'),
+            future: AuthService().getAdress(widget.userId),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
@@ -48,7 +49,8 @@ class _AddressListPageState extends State<AddressListPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AddressListPage(),
+                                builder: (context) =>
+                                    AddressListPage(widget.userId),
                               ));
                         },
                       );
@@ -69,7 +71,7 @@ class _AddressListPageState extends State<AddressListPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AddAddressPage(),
+                      builder: (context) => AddAddressPage(widget.userId),
                     ));
               },
               child: Icon(Icons.add),

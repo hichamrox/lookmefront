@@ -10,6 +10,8 @@ import '../components/formInput.dart';
 import '../services/authservices.dart';
 
 class AddOfferPage extends StatefulWidget {
+  final userId;
+  AddOfferPage(this.userId);
   @override
   _AddOfferPageState createState() => _AddOfferPageState();
 }
@@ -176,25 +178,16 @@ class _AddOfferPageState extends State<AddOfferPage> {
               child: Button(
                   "Sauvegarder l'article", true, true, size.width * 0.8, 50,
                   () async {
-                var data = await AuthService()
-                    .getOffreById('629032e2b4b3b5c4d33eeb77');
+                var data = await AuthService().getOffreById(widget.userId);
                 AuthService()
-                    .addOffer(
-                        '629032e2b4b3b5c4d33eeb77',
-                        title,
-                        description,
-                        cost,
-                        size1,
-                        morphology,
-                        height,
-                        category,
-                        await getStringToSF())
+                    .addOffer(widget.userId, title, description, cost, size1,
+                        morphology, height, category, await getStringToSF())
                     .then((val) {
                   if (val.data['success']) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => LocationListPage(),
+                        builder: (context) => LocationListPage(widget.userId),
                       ),
                     );
                   }

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/mdpInput.dart';
 import 'package:lookmefront/pages/login.dart';
+import 'package:lookmefront/pages/profile.dart';
 import 'package:lookmefront/pages/settings.dart';
 import 'package:lookmefront/services/authservices.dart';
 
 import '../components/button.dart';
 
 class EditPasswordPage extends StatefulWidget {
-  const EditPasswordPage({Key? key}) : super(key: key);
+  final userId;
+  EditPasswordPage(this.userId);
 
   @override
   _EditPasswordPageState createState() => _EditPasswordPageState();
@@ -67,12 +69,12 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                   () {
                 if (password == confPassword) {
                   AuthService()
-                      .updatePassword("62f7e2f945aa80bae2225b3e", password)
+                      .updatePassword(widget.userId, password)
                       .then((val) {
                     if (val.data['success']) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        MaterialPageRoute(builder: (context) => ProfilePage()),
                       );
                     } else
                       print("le changement n'est pas fait");

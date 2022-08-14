@@ -9,6 +9,11 @@ import 'package:lookmefront/pages/editPersonnalInformations.dart';
 import 'package:lookmefront/pages/faqPage.dart';
 
 class SittingPage extends StatefulWidget {
+  final userId;
+  final name;
+  final email;
+  SittingPage(this.userId, this.name, this.email);
+
   //final VoidCallback onTap;
   //const SittingPage(this.onTap);
 
@@ -55,18 +60,20 @@ class _SittingPageState extends State<SittingPage> {
               ],
             ),
           ),
-          CarteProfil("Nom et Prénom", "Marwa IBKH", () {
+          CarteProfil("Nom et Prénom", widget.name, () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EditInformationsPage(),
+                  builder: (context) => EditInformationsPage(
+                      widget.userId, widget.name, widget.email),
                 ));
           }),
-          CarteProfil("E-mail", "Marwa@test.fr", () {
+          CarteProfil("E-mail", widget.email, () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EditEmailPage(),
+                  builder: (context) =>
+                      EditEmailPage(widget.userId, widget.name, widget.email),
                 ));
           }),
           Padding(
@@ -81,15 +88,6 @@ class _SittingPageState extends State<SittingPage> {
                       fontWeight: FontWeight.w500,
                       fontSize: 18),
                 ),
-                GestureDetector(
-                    onTap: (() {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditPasswordPage(),
-                          ));
-                    }),
-                    child: Icon(Icons.arrow_forward_ios))
               ],
             ),
           ),
@@ -97,7 +95,7 @@ class _SittingPageState extends State<SittingPage> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EditPasswordPage(),
+                  builder: (context) => EditPasswordPage(widget.userId),
                 ));
           }),
           Padding(

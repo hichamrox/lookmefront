@@ -7,7 +7,8 @@ import 'package:lookmefront/pages/addOffer.dart';
 import '../services/authservices.dart';
 
 class LocationListPage extends StatelessWidget {
-  const LocationListPage({Key? key}) : super(key: key);
+  final userId;
+  const LocationListPage(this.userId);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class LocationListPage extends StatelessWidget {
         ),
         body: Stack(children: [
           FutureBuilder<List<Offre>>(
-              future: AuthService().getOffreById('629032e2b4b3b5c4d33eeb77'),
+              future: AuthService().getOffreById(userId),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
@@ -46,7 +47,8 @@ class LocationListPage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => LocationListPage(),
+                                  builder: (context) =>
+                                      LocationListPage(userId),
                                 ));
                           },
                         );
@@ -67,7 +69,7 @@ class LocationListPage extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AddOfferPage(),
+                        builder: (context) => AddOfferPage(userId),
                       ));
                 },
                 child: Icon(Icons.add),
