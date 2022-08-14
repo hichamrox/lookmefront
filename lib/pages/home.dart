@@ -14,13 +14,13 @@ class _HomePageState extends State<HomePage> {
   List<String> pageKeys = [
     "AccueilPage",
     "FavoritePage",
-    "DiscussionPage",
+    "ChoixDiscussionPage",
     "ProfilePage"
   ];
   Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
     "AccueilPage": GlobalKey<NavigatorState>(),
     "FavoritePage": GlobalKey<NavigatorState>(),
-    "DiscussionPage": GlobalKey<NavigatorState>(),
+    "ChoixDiscussionPage": GlobalKey<NavigatorState>(),
     "ProfilePage": GlobalKey<NavigatorState>(),
   };
 
@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
           child: Stack(children: <Widget>[
             _buildOffstageNavigator("AccueilPage"),
             _buildOffstageNavigator("FavoritePage"),
-            _buildOffstageNavigator("DiscussionPage"),
+            _buildOffstageNavigator("ChoixDiscussionPage"),
             _buildOffstageNavigator("ProfilePage")
           ]),
         ),

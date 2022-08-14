@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/locationCardContact.dart';
 import 'package:lookmefront/model/chat.dart';
 import 'package:lookmefront/pages/chatPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/locationCard.dart';
 import '../model/offres.dart';
@@ -10,7 +11,8 @@ import '../services/authservices.dart';
 import 'addOffer.dart';
 
 class DiscussionPage extends StatefulWidget {
-  const DiscussionPage({Key? key}) : super(key: key);
+  // final String userId;
+  // DiscussionPage(this.userId);
 
   @override
   _DiscussionPageState createState() => _DiscussionPageState();
@@ -39,7 +41,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
         body: Stack(children: [
           FutureBuilder<List<Chat>>(
               future:
-                  AuthService().getChatsByUserId('62f7e2f945aa80bae2225b3e'),
+                  AuthService().getChatsByUserId("629032e2b4b3b5c4d33eeb77"),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(

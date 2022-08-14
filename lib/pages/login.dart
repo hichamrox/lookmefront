@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:lookmefront/components/formInput.dart';
 import 'package:lookmefront/pages/home.dart';
 import 'package:lookmefront/pages/signup.dart';
@@ -8,6 +9,7 @@ import 'package:lookmefront/services/authservices.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../components/button.dart';
 import '../components/mdpInput.dart';
+import '../model/user.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -19,9 +21,13 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   var email, password, token;
 
-  addStringToSF(token) async {
+  addStringToSF(token, userId, email, name, image) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
+    prefs.setString('userId', userId);
+    prefs.setString('email', email);
+    prefs.setString('name', name);
+    prefs.setString('image', image);
   }
 
   @override
@@ -103,8 +109,11 @@ class _LoginPageState extends State<LoginPage> {
                     AuthService().login(email, password).then((val) {
                       if (val.data['success']) {
                         token = val.data['token'];
-                        addStringToSF(token);
-                        print(token);
+                        Map<String, dynamic> userdata = Jwt.parseJwt(token);
+                        User userData = User.fromJson(userdata);
+                        addStringToSF(token, userData.id, userData.email,
+                            userData.name, userData.image);
+
                         Fluttertoast.showToast(
                             msg: val.data['msg'],
                             toastLength: Toast.LENGTH_SHORT,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lookmefront/pages/accueil.dart';
-import 'package:lookmefront/pages/discussion.dart';
+import 'package:lookmefront/pages/choixDiscussionPage.dart';
 import 'package:lookmefront/pages/favorite.dart';
 import 'package:lookmefront/pages/profile.dart';
 
@@ -24,8 +24,8 @@ class TabNavigator extends StatelessWidget {
       child = AccueilPage();
     else if (tabItem == "FavoritePage")
       child = FavoritePage();
-    else if (tabItem == "DiscussionPage")
-      child = DiscussionPage();
+    else if (tabItem == "ChoixDiscussionPage")
+      child = ChoixDiscussionPage();
     else if (tabItem == "ProfilePage") child = ProfilePage();
 
     return Navigator(
