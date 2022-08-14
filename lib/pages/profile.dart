@@ -70,11 +70,32 @@ class _ProfilePageState extends State<ProfilePage> {
         Container(
           child: Row(
             children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://res.cloudinary.com/dshuazgaz/image/upload/v1605731267/bpayfekmwaruliopixxw.png"),
-                radius: 40,
-              ),
+              Stack(children: [
+                CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      "https://res.cloudinary.com/dshuazgaz/image/upload/v1605731267/bpayfekmwaruliopixxw.png"),
+                  radius: 40,
+                ),
+                Positioned(
+                    left: 0,
+                    bottom: 0,
+                    child: Container(
+                        padding: EdgeInsets.all(7.5),
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 2, color: Colors.white),
+                            borderRadius: BorderRadius.circular(90.0),
+                            color: Colors.green))),
+                Positioned(
+                    right: 0,
+                    bottom: 0,
+                    child: InkWell(
+                      child: Icon(
+                        Icons.edit_outlined,
+                        size: 23,
+                      ),
+                      onTap: () {},
+                    ))
+              ]),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
