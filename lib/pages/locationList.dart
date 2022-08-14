@@ -37,8 +37,19 @@ class LocationListPage extends StatelessWidget {
                       itemCount: snapshot.data?.length,
                       itemBuilder: (context, index) {
                         var offre = (snapshot.data as List<Offre>)[index];
-                        return LocationCard(offre.title, offre.cost.toString(),
-                            "https://robe-vintage.net/upl/2017/02/robe-vintage-retro-a-pois.png");
+                        return LocationCard(
+                          offre.title,
+                          offre.cost.toString(),
+                          offre.image,
+                          () async {
+                            await AuthService().deleteOffer(offre.id);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LocationListPage(),
+                                ));
+                          },
+                        );
                       });
                 } else if (snapshot.hasError) {
                   return Text("Error");

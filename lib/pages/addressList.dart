@@ -7,9 +7,14 @@ import 'package:lookmefront/pages/editAddress.dart';
 import '../components/addressCard.dart';
 import '../services/authservices.dart';
 
-class AddressListPage extends StatelessWidget {
+class AddressListPage extends StatefulWidget {
   const AddressListPage();
 
+  @override
+  State<AddressListPage> createState() => _AddressListPageState();
+}
+
+class _AddressListPageState extends State<AddressListPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -38,11 +43,12 @@ class AddressListPage extends StatelessWidget {
                         adress.city,
                         adress.adress,
                         adress.cp.toString(),
-                        () {
+                        () async {
+                          await AuthService().deleteAdress(adress.id);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditAddressPage(),
+                                builder: (context) => AddressListPage(),
                               ));
                         },
                       );

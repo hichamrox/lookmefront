@@ -33,6 +33,27 @@ class AuthService {
         options: Options(contentType: Headers.formUrlEncodedContentType));
   }
 
+  updatePassword(id, password) async {
+    dio.options.queryParameters['id'] = id;
+    return await dio.patch('https://flutterauth10.herokuapp.com/updatePassword',
+        data: {"password": password},
+        options: Options(contentType: Headers.formUrlEncodedContentType));
+  }
+
+  updateEmail(id, email) async {
+    dio.options.queryParameters['id'] = id;
+    return await dio.patch('https://flutterauth10.herokuapp.com/updateEmail',
+        data: {"email": email},
+        options: Options(contentType: Headers.formUrlEncodedContentType));
+  }
+
+  updateName(id, name) async {
+    dio.options.queryParameters['id'] = id;
+    return await dio.patch('https://flutterauth10.herokuapp.com/updateName',
+        data: {"name": name},
+        options: Options(contentType: Headers.formUrlEncodedContentType));
+  }
+
   addOffer(id, title, description, cost, size, morphology, height, category,
       image) async {
     return await dio.post('https://flutterauth10.herokuapp.com/addOffer',
@@ -78,6 +99,12 @@ class AuthService {
         options: Options(contentType: Headers.formUrlEncodedContentType));
   }
 
+  deleteAdress(id) async {
+    return await dio.delete('https://flutterauth10.herokuapp.com/deleteAdress',
+        data: {"id": id},
+        options: Options(contentType: Headers.formUrlEncodedContentType));
+  }
+
   addChat(sellerId, costumerId, orderId) async {
     return await dio.post('https://flutterauth10.herokuapp.com/addChat',
         data: {
@@ -96,6 +123,12 @@ class AuthService {
   getOfferById(id) async {
     dio.options.queryParameters['id'] = id;
     return await dio.get('https://flutterauth10.herokuapp.com/getOfferById');
+  }
+
+  deleteOffer(id)async{
+    return await dio.delete('https://flutterauth10.herokuapp.com/deleteOffer',
+    data: {"id":id},
+    options: Options(contentType: Headers.formUrlEncodedContentType));
   }
 
   Future<List<Offre>> getOffers() async {
