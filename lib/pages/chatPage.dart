@@ -106,6 +106,7 @@ class _ChatPageState extends State<ChatPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Row(
           children: [
             Padding(
@@ -141,7 +142,15 @@ class _ChatPageState extends State<ChatPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
-                      decoration: InputDecoration(hintText: "Write message"),
+                      cursorColor: Colors.black,
+                      decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 0, 0, 0))),
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)),
+                          hintText: "Write message",
+                          focusColor: Colors.black),
                       controller: msgController,
                     ),
                   ),
@@ -161,7 +170,7 @@ class _ChatPageState extends State<ChatPage> {
                     child: Icon(
                       Icons.send,
                       size: 30,
-                      color: Colors.blue,
+                      color: Color.fromARGB(255, 0, 0, 1),
                     ),
                   ),
                 )
@@ -226,8 +235,7 @@ class _ChatPageState extends State<ChatPage> {
                                   child: Container(
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        color:
-                                            Color.fromARGB(255, 93, 173, 238)),
+                                        color: Color.fromARGB(255, 0, 0, 0)),
                                     child: Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: Text(

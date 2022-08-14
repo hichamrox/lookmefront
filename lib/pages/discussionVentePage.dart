@@ -1,33 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lookmefront/components/locationCardContact.dart';
-import 'package:lookmefront/model/chat.dart';
+import 'package:lookmefront/pages/addOffer.dart';
 import 'package:lookmefront/pages/chatPage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../components/locationCard.dart';
-import '../model/offres.dart';
+import '../components/locationCardContact.dart';
+import '../model/chat.dart';
 import '../services/authservices.dart';
-import 'addOffer.dart';
 
-class DiscussionPage extends StatefulWidget {
-  // final String userId;
-  // DiscussionPage(this.userId);
+class DiscussionVentePage extends StatefulWidget {
+  final String userId;
+  DiscussionVentePage(this.userId);
 
   @override
-  _DiscussionPageState createState() => _DiscussionPageState();
+  State<DiscussionVentePage> createState() => _DiscussionVentePageState();
 }
 
-class _DiscussionPageState extends State<DiscussionPage> {
+class _DiscussionVentePageState extends State<DiscussionVentePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: Icon(
-            Icons.search,
-            color: Color.fromARGB(255, 255, 255, 255),
-            size: 40,
-          ),
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
           title: Text(
@@ -40,8 +32,7 @@ class _DiscussionPageState extends State<DiscussionPage> {
         ),
         body: Stack(children: [
           FutureBuilder<List<Chat>>(
-              future:
-                  AuthService().getChatsByUserId("629032e2b4b3b5c4d33eeb77"),
+              future: AuthService().getChatsBysellerId(widget.userId),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
@@ -65,21 +56,6 @@ class _DiscussionPageState extends State<DiscussionPage> {
                   return const CircularProgressIndicator();
                 }
               }),
-          Positioned(
-              bottom: 10,
-              right: 10,
-              child: FloatingActionButton(
-                backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                foregroundColor: Colors.black,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddOfferPage(),
-                      ));
-                },
-                child: Icon(Icons.add),
-              ))
         ])
 
         /*ListView(

@@ -125,10 +125,10 @@ class AuthService {
     return await dio.get('https://flutterauth10.herokuapp.com/getOfferById');
   }
 
-  deleteOffer(id)async{
+  deleteOffer(id) async {
     return await dio.delete('https://flutterauth10.herokuapp.com/deleteOffer',
-    data: {"id":id},
-    options: Options(contentType: Headers.formUrlEncodedContentType));
+        data: {"id": id},
+        options: Options(contentType: Headers.formUrlEncodedContentType));
   }
 
   Future<List<Offre>> getOffers() async {
@@ -201,10 +201,27 @@ class AuthService {
     }
   }
 
-  Future<List<Chat>> getChatsByUserId(id) async {
+  Future<List<Chat>> getChatsBycostumerId(id) async {
     try {
-      Response<String> response = await dio
-          .get('https://flutterauth10.herokuapp.com/getChatsByUserId?id=' + id);
+      Response<String> response = await dio.get(
+          'https://flutterauth10.herokuapp.com/getChatsBycostumerId?id=' + id);
+      // print("liste d'chat" + response.toString());
+      if (response.statusCode == 200) {
+        var result = jsonDecode(response.toString()) as List;
+        var listChat = result.map((e) => Chat.fromJson(e)).toList();
+        return listChat;
+      } else {
+        throw Exception(response.statusMessage);
+      }
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<List<Chat>> getChatsBysellerId(id) async {
+    try {
+      Response<String> response = await dio.get(
+          'https://flutterauth10.herokuapp.com/getChatsBysellerId?id=' + id);
       // print("liste d'chat" + response.toString());
       if (response.statusCode == 200) {
         var result = jsonDecode(response.toString()) as List;
