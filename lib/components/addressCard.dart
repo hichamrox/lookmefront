@@ -74,7 +74,7 @@ class _AddressCardState extends State<AddressCard> {
                       ),
                       InkWell(
                         child: Icon(
-                          Icons.edit_outlined,
+                          Icons.delete_forever_outlined,
                           size: 33,
                         ),
                         onTap: widget.onTapIcon,

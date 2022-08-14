@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/mdpInput.dart';
+import 'package:lookmefront/pages/login.dart';
 import 'package:lookmefront/pages/settings.dart';
+import 'package:lookmefront/services/authservices.dart';
 
 import '../components/button.dart';
 
@@ -52,7 +54,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
               size.width * 0.8,
               (value) {
                 setState(() {
-                  password = value;
+                  confPassword = value;
                 });
               },
             ),
@@ -63,10 +65,20 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
               child: Button(
                   "Modifier Mot de Passe", true, true, size.width * 0.7, 50,
                   () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SittingPage()),
-                );
+                if (password == confPassword) {
+                  AuthService()
+                      .updatePassword("62f7e2f945aa80bae2225b3e", password)
+                      .then((val) {
+                    if (val.data['success']) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    } else
+                      print("le changement n'est pas fait");
+                  });
+                } else
+                  print("le mot de passe et le confirm pas bon");
               }, 10),
             ),
           ),

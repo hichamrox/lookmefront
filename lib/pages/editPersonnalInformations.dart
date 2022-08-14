@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/formInput.dart';
+import 'package:lookmefront/pages/login.dart';
 import 'package:lookmefront/pages/settings.dart';
 
 import '../components/button.dart';
+import '../services/authservices.dart';
 
 class EditInformationsPage extends StatefulWidget {
   const EditInformationsPage({Key? key}) : super(key: key);
@@ -46,10 +48,17 @@ class _EditInformationsPageState extends State<EditInformationsPage> {
                 child: Button(
                     "Modifier Nom et prénom", true, true, size.width * 0.7, 50,
                     () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SittingPage()),
-                  );
+                  AuthService()
+                      .updateEmail("62f7e2f945aa80bae2225b3e", name)
+                      .then((val) {
+                    if (val.data['success']) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SittingPage()),
+                      );
+                    } else
+                      print("le changement n'est pas fait");
+                  });
                 }, 10),
               ),
             ),
