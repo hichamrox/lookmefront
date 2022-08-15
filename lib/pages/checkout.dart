@@ -232,8 +232,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     id.toString(), widget.image, widget.name);
                 Fluttertoast.showToast(
                     timeInSecForIosWeb: 3,
-                    msg:
-                        "Vous ne pouvez pas passer cette commande car il s'agit de votre offre !",
+                    msg: "Votre commande est passé avec succé !",
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.BOTTOM,
                     backgroundColor: Color.fromARGB(255, 48, 246, 51),
