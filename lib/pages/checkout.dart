@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/button.dart';
 import 'package:lookmefront/components/checkoutModification.dart';
+import 'package:lookmefront/pages/accueil.dart';
 import 'package:lookmefront/pages/congrats.dart';
 import 'package:lookmefront/pages/profile.dart';
 import 'package:lookmefront/services/authservices.dart';
@@ -223,15 +225,32 @@ class _CheckoutPageState extends State<CheckoutPage> {
             padding: const EdgeInsets.all(8.0),
             child:
                 Button("Paiement", true, true, size.width * 0.8, 50, () async {
-              var id = await AuthService().addOrder(widget.userId,
-                  widget.price * widget.jours, widget.jours, widget.offerId);
-              await AuthService().addChat(widget.sellerId, widget.userId,
-                  id.toString(), widget.image, widget.name);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfilePage(),
-                  ));
+              if (!(widget.sellerId == widget.userId)) {
+                var id = await AuthService().addOrder(widget.userId,
+                    widget.price * widget.jours, widget.jours, widget.offerId);
+                await AuthService().addChat(widget.sellerId, widget.userId,
+                    id.toString(), widget.image, widget.name);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(),
+                    ));
+              } else {
+                Fluttertoast.showToast(
+                    timeInSecForIosWeb: 3,
+                    msg:
+                        "Vous ne pouvez pas passer cette commande car il s'agit de votre offre !",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: Color.fromARGB(255, 209, 68, 44),
+                    textColor: Colors.white,
+                    fontSize: 16);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AccueilPage(),
+                    ));
+              }
             }, 5),
           )
         ],
