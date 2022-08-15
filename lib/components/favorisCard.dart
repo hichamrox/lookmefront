@@ -18,10 +18,14 @@ class FavorisCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ClipRRect(
-              child: Image.network(img, scale: 10),
-              borderRadius: new BorderRadius.all(
-                Radius.circular(5.0),
+            Container(
+              height: 100,
+              width: 100,
+              child: ClipRRect(
+                child: Image.network(img),
+                borderRadius: new BorderRadius.all(
+                  Radius.circular(5.0),
+                ),
               ),
             ),
             Text(
