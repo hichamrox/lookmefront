@@ -46,7 +46,7 @@ class _DiscussionVentePageState extends State<DiscussionVentePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ChatPage(chat.sellerId,
-                                    chat.costumerId, chat.orderId)),
+                                    chat.costumerId, chat.orderId, chat.title)),
                           );
                         });
                       });

@@ -9,10 +9,11 @@ import '../services/authservices.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ChatPage extends StatefulWidget {
-  final String sellerId;
-  final String costumerId;
+  final String senderId;
+  final String receiverId;
   final String orderId;
-  const ChatPage(this.sellerId, this.costumerId, this.orderId);
+  final String title;
+  const ChatPage(this.senderId, this.receiverId, this.orderId, this.title);
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -33,6 +34,9 @@ class _ChatPageState extends State<ChatPage> {
 
   _addsMessages(List<dynamic> data) {
     print(data);
+    print(widget.orderId);
+    print("sender : " + widget.senderId);
+    print("receiver : " + widget.receiverId);
     setState(() {
       messages = data
           .where((json) => json["orderId"] == widget.orderId)
@@ -70,8 +74,8 @@ class _ChatPageState extends State<ChatPage> {
   _sendMessage() {
     _socket.emit('message', {
       'msg': msgController.text.trim(),
-      'senderId': widget.costumerId,
-      'receiverId': widget.sellerId,
+      'senderId': widget.senderId,
+      'receiverId': widget.receiverId,
       'orderId': widget.orderId
     });
   }
@@ -118,7 +122,7 @@ class _ChatPageState extends State<ChatPage> {
             ),
             Column(
               children: [
-                Text("User"),
+                Text(widget.title),
                 Text(
                   "en ligne",
                   style: TextStyle(fontSize: 10),
@@ -185,116 +189,74 @@ class _ChatPageState extends State<ChatPage> {
         controller: controller,
         itemCount: messages.length,
         itemBuilder: (context, index) {
-          return Text(messages[index].msg);
+          if (widget.senderId == messages[index].senderId) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(messages[index].createdAt.hour.toString() +
+                        ":" +
+                        messages[index].createdAt.minute.toString()),
+                    Flexible(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width * 0.6),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color.fromARGB(255, 0, 0, 0)),
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              messages[index].msg,
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else if (widget.receiverId == messages[index].senderId) {
+            return Container(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0, top: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width * 0.6),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color.fromARGB(255, 216, 213, 213)),
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              messages[index].msg,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(messages[index].createdAt.hour.toString() +
+                        ":" +
+                        messages[index].createdAt.minute.toString())
+                  ],
+                ),
+              ),
+            );
+          }
+
+          return Container();
         });
   }
-
-  // Widget bodyPage() {
-  //   return FutureBuilder<List<Offre>>(
-  //       future: AuthService().getOffreById('629032e2b4b3b5c4d33eeb77'),
-  //       builder: (context, snapshot) {
-  //         if (!snapshot.hasData) {
-  //           return const CircularProgressIndicator();
-  //         } else {
-  //           // List documents = snapshot.data!.docs;
-  //           // List<Message> messages = [];
-  //           // documents.forEach((element) {
-  //           //   Message msg = Message(element);
-  //           //   if (((monProfil.uid == msg.uidSender) &
-  //           //           (widget.user.uid == msg.uidRecever)) |
-  //           //       ((monProfil.uid == msg.uidRecever) &
-  //           //           (widget.user.uid == msg.uidSender))) {
-  //           //     messages.add(msg);
-  //           //   }
-  //           // });
-  //           // messages.sort(((a, b) => a.date.compareTo(b.date)));
-
-  //           return Container(
-  //             height: MediaQuery.of(context).size.height * 0.75,
-  //             child: ListView.builder(
-  //                 controller: controller,
-  //                 itemCount: snapshot.data?.length,
-  //                 itemBuilder: (context, index) {
-  //                   var offre = (snapshot.data as List<Offre>)[index];
-  //                   if (offre.cost == 100 ||
-  //                       offre.cost == 40 ||
-  //                       offre.cost == 300) {
-  //                     return Padding(
-  //                       padding: const EdgeInsets.all(8.0),
-  //                       child: Container(
-  //                         child: Row(
-  //                           mainAxisAlignment: MainAxisAlignment.end,
-  //                           children: [
-  //                             Text(offre.updatedAt.toString()),
-  //                             Flexible(
-  //                               child: ConstrainedBox(
-  //                                 constraints: BoxConstraints(
-  //                                     maxWidth:
-  //                                         MediaQuery.of(context).size.width *
-  //                                             0.6),
-  //                                 child: Container(
-  //                                   decoration: BoxDecoration(
-  //                                       borderRadius: BorderRadius.circular(10),
-  //                                       color: Color.fromARGB(255, 0, 0, 0)),
-  //                                   child: Padding(
-  //                                     padding: EdgeInsets.all(8.0),
-  //                                     child: Text(
-  //                                       offre.title,
-  //                                       style: TextStyle(fontSize: 20),
-  //                                     ),
-  //                                   ),
-  //                                 ),
-  //                               ),
-  //                             ),
-  //                             CircleAvatar(
-  //                                 radius: 15,
-  //                                 backgroundImage: NetworkImage(
-  //                                     "https://robe-vintage.net/upl/2017/02/robe-vintage-retro-a-pois.png"))
-  //                           ],
-  //                         ),
-  //                       ),
-  //                     );
-  //                   } else {
-  //                     return Container(
-  //                       child: Row(
-  //                         mainAxisAlignment: MainAxisAlignment.start,
-  //                         children: [
-  //                           Padding(
-  //                             padding: const EdgeInsets.all(8.0),
-  //                             child: CircleAvatar(
-  //                                 radius: 15,
-  //                                 backgroundImage: NetworkImage(
-  //                                     "https://robe-vintage.net/upl/2017/02/robe-vintage-retro-a-pois.png")),
-  //                           ),
-  //                           Flexible(
-  //                             child: ConstrainedBox(
-  //                               constraints: BoxConstraints(
-  //                                   maxWidth:
-  //                                       MediaQuery.of(context).size.width *
-  //                                           0.6),
-  //                               child: Container(
-  //                                 decoration: BoxDecoration(
-  //                                     borderRadius: BorderRadius.circular(10),
-  //                                     color:
-  //                                         Color.fromARGB(255, 216, 213, 213)),
-  //                                 child: Padding(
-  //                                   padding: EdgeInsets.all(8.0),
-  //                                   child: Text(
-  //                                     offre.title,
-  //                                     style: TextStyle(fontSize: 20),
-  //                                   ),
-  //                                 ),
-  //                               ),
-  //                             ),
-  //                           ),
-  //                           Text(offre.updatedAt.toString())
-  //                         ],
-  //                       ),
-  //                     );
-  //                   }
-  //                 }),
-  //           );
-  //         }
-  //       });
-  // }
 }

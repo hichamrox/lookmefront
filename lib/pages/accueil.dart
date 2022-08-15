@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lookmefront/components/itemCard.dart';
 import 'package:lookmefront/model/offres.dart';
-import 'package:lookmefront/pages/cart.dart';
 import 'package:lookmefront/pages/product.dart';
 import 'package:lookmefront/services/authservices.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,21 +37,6 @@ class _AccueilPageState extends State<AccueilPage> {
               "assets/images/logo.png",
             ),
           ),
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CartPage()),
-                );
-              },
-              child: Icon(
-                Icons.shopping_cart,
-                color: Colors.grey,
-                size: 40,
-              ),
-            )
-          ],
         ),
         body: FutureBuilder<List<Offre>>(
             future: AuthService().getOffers(),
@@ -66,6 +50,7 @@ class _AccueilPageState extends State<AccueilPage> {
                       var offer = (snapshot.data as List<Offre>)[index];
                       print(offer.image);
                       return ItemCard(
+                        offerId: offer.id,
                         height: size.height * 0.3,
                         width: size.width * 0.2,
                         img: offer.image,
@@ -79,6 +64,8 @@ class _AccueilPageState extends State<AccueilPage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ProductPage(
+                                    offer.id,
+                                    offer.userId,
                                     offer.image,
                                     offer.title,
                                     offer.cost,

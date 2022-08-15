@@ -19,7 +19,7 @@ class _FilesPickerState extends State<FilesPicker> {
   String? imageURL;
   addStringToSF(imageUrl) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('image', imageUrl);
+    prefs.setString('imageURL', imageUrl);
   }
 
   Future upload() async {

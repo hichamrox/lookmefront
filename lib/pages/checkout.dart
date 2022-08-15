@@ -3,20 +3,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/button.dart';
 import 'package:lookmefront/components/checkoutModification.dart';
 import 'package:lookmefront/pages/congrats.dart';
+import 'package:lookmefront/pages/profile.dart';
+import 'package:lookmefront/services/authservices.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckoutPage extends StatefulWidget {
+  final String userId;
+  final String offerId;
+  final String sellerId;
+  final String image;
   final String name;
-  final String adresse;
+  final String description;
   final String cardNumber;
   final String delevery;
   final int price;
-  CheckoutPage(
-    this.name,
-    this.adresse,
-    this.cardNumber,
-    this.delevery,
-    this.price,
-  );
+  final int jours;
+  CheckoutPage(this.userId, this.offerId, this.sellerId, this.image, this.name,
+      this.description, this.cardNumber, this.delevery, this.price, this.jours);
 
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
@@ -71,11 +74,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        widget.adresse,
+                        widget.description,
                         style: GoogleFonts.nunitoSans(
                           color: Color.fromARGB(255, 143, 140, 140),
                           fontWeight: FontWeight.normal,
-                          fontSize: 20,
+                          fontSize: 12,
                         ),
                       ),
                     )
@@ -149,7 +152,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "€" + widget.price.toString() + ".00",
+                          "€" +
+                              (widget.price * widget.jours).toString() +
+                              ".00",
                           style: GoogleFonts.nunitoSans(
                               color: Color.fromARGB(255, 14, 13, 13),
                               fontWeight: FontWeight.w600,
@@ -199,7 +204,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "€" + (widget.price + 5).toString() + ".00",
+                          "€" +
+                              (widget.price * widget.jours + 5).toString() +
+                              ".00",
                           style: GoogleFonts.nunitoSans(
                               color: Color.fromARGB(255, 14, 13, 13),
                               fontWeight: FontWeight.w600,
@@ -214,11 +221,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Button("Paiement", true, true, size.width * 0.8, 50, () {
+            child:
+                Button("Paiement", true, true, size.width * 0.8, 50, () async {
+              var id = await AuthService().addOrder(widget.userId,
+                  widget.price * widget.jours, widget.jours, widget.offerId);
+              await AuthService().addChat(widget.sellerId, widget.userId,
+                  id.toString(), widget.image, widget.name);
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Congrat(),
+                    builder: (context) => ProfilePage(),
                   ));
             }, 5),
           )

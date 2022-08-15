@@ -19,7 +19,7 @@ class AddOfferPage extends StatefulWidget {
 class _AddOfferPageState extends State<AddOfferPage> {
   getStringToSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? image = prefs.getString('image');
+    String? image = prefs.getString('imageURL');
     print(image);
     return image;
   }

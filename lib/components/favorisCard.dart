@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FavorisCard extends StatelessWidget {
-  const FavorisCard(this.img, this.label, this.price);
+  const FavorisCard(this.img, this.label);
   final String img;
   final String label;
-  final String price;
 
   @override
   Widget build(BuildContext context) {
@@ -23,23 +22,12 @@ class FavorisCard extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20),
-            child: Column(
-              children: [
-                Text(
-                  label,
-                  style: GoogleFonts.nunitoSans(
-                      color: Color.fromARGB(255, 87, 86, 86),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 17),
-                ),
-                Text(
-                  price + " €",
-                  style: GoogleFonts.merriweather(
-                      color: Color.fromARGB(255, 8, 8, 8),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 17),
-                )
-              ],
+            child: Text(
+              label,
+              style: GoogleFonts.nunitoSans(
+                  color: Color.fromARGB(255, 87, 86, 86),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 17),
             ),
           ),
           Padding(

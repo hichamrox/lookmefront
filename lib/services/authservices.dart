@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lookmefront/model/adress.dart';
 import 'package:lookmefront/model/chat.dart';
+import 'package:lookmefront/model/favori.dart';
 import 'package:lookmefront/model/offres.dart';
 import 'package:lookmefront/model/order.dart';
 
@@ -105,12 +106,14 @@ class AuthService {
         options: Options(contentType: Headers.formUrlEncodedContentType));
   }
 
-  addChat(sellerId, costumerId, orderId) async {
+  addChat(sellerId, costumerId, orderId, image, title) async {
     return await dio.post('https://flutterauth10.herokuapp.com/addChat',
         data: {
           "sellerId": sellerId,
           "costumerId": costumerId,
-          "orderId": orderId
+          "orderId": orderId,
+          "image": image,
+          "title": title
         },
         options: Options(contentType: Headers.formUrlEncodedContentType));
   }
@@ -127,6 +130,23 @@ class AuthService {
 
   deleteOffer(id) async {
     return await dio.delete('https://flutterauth10.herokuapp.com/deleteOffer',
+        data: {"id": id},
+        options: Options(contentType: Headers.formUrlEncodedContentType));
+  }
+
+  addFavori(userId, offerId, title, image) async {
+    return await dio.post('https://flutterauth10.herokuapp.com/addAdress',
+        data: {
+          "userId": userId,
+          "offerId": offerId,
+          "title": title,
+          "image": image
+        },
+        options: Options(contentType: Headers.formUrlEncodedContentType));
+  }
+
+  deleteFavori(id) async {
+    return await dio.delete('https://flutterauth10.herokuapp.com/deleteFavori',
         data: {"id": id},
         options: Options(contentType: Headers.formUrlEncodedContentType));
   }
@@ -210,6 +230,22 @@ class AuthService {
         var result = jsonDecode(response.toString()) as List;
         var listChat = result.map((e) => Chat.fromJson(e)).toList();
         return listChat;
+      } else {
+        throw Exception(response.statusMessage);
+      }
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<List<Favori>> getFavorisByUserId(id) async {
+    try {
+      Response<String> response = await dio.get(
+          'https://flutterauth10.herokuapp.com/getFavorisByUserId?id=' + id);
+      if (response.statusCode == 200) {
+        var result = jsonDecode(response.toString()) as List;
+        var listFavori = result.map((e) => Favori.fromJson(e)).toList();
+        return listFavori;
       } else {
         throw Exception(response.statusMessage);
       }

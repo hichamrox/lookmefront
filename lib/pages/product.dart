@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/button.dart';
+import 'package:lookmefront/pages/checkout.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductPage extends StatefulWidget {
-  ProductPage(this.img, this.label, this.price, this.description, this.review,
-      this.stars);
+  ProductPage(this.offerId, this.sellerId, this.img, this.label, this.price,
+      this.description, this.review, this.stars);
+  final String offerId;
+  final String sellerId;
   final String img;
   final String label;
   final int price;
@@ -21,6 +25,11 @@ class _ProductPageState extends State<ProductPage> {
   String filledIcon = "assets/images/Heartb.png";
   String unfilledIcon = "assets/images/Heart.png";
   bool clicked = false;
+  getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userId = prefs.getString('userId').toString();
+    return userId;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,10 +171,26 @@ class _ProductPageState extends State<ProductPage> {
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 10),
-                  child: Button("Ajouter au panier", true, true,
-                      size.width * 0.7, 50, () {}, 5),
-                ),
+                    padding: const EdgeInsets.only(top: 10, left: 10),
+                    child: Button("Commander", true, true, size.width * 0.8, 50,
+                        () async {
+                      var userId = await getUserId();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CheckoutPage(
+                                userId,
+                                widget.offerId,
+                                widget.sellerId,
+                                widget.img,
+                                widget.label,
+                                widget.description,
+                                "0000 0000 0000 000",
+                                "DHL",
+                                widget.price,
+                                jr)),
+                      );
+                    }, 10)),
                 Padding(
                     padding: const EdgeInsets.only(top: 10, left: 20),
                     child: IconButton(

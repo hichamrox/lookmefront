@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ItemCard extends StatelessWidget {
+  final String offerId;
   final double height;
   final double width;
   final String img;
@@ -11,6 +12,7 @@ class ItemCard extends StatelessWidget {
   final VoidCallback onTapItem;
   const ItemCard(
       {Key? key,
+      required this.offerId,
       required this.height,
       required this.width,
       required this.img,
