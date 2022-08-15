@@ -56,6 +56,13 @@ class AuthService {
         options: Options(contentType: Headers.formUrlEncodedContentType));
   }
 
+  updateImage(id, image) async {
+    dio.options.queryParameters['id'] = id;
+    return await dio.patch('https://flutterauth10.herokuapp.com/updateName',
+        data: {"image": image},
+        options: Options(contentType: Headers.formUrlEncodedContentType));
+  }
+
   addOffer(id, title, description, cost, size, morphology, height, category,
       image) async {
     return await dio.post('https://flutterauth10.herokuapp.com/addOffer',

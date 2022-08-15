@@ -87,10 +87,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Row(
                     children: [
                       Stack(children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              snapshot.data.toString().split(",")[3]),
-                          radius: 40,
+                        Padding(
+                          padding: const EdgeInsets.all(11.0),
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                snapshot.data.toString().split(",")[3]),
+                            radius: 30,
+                          ),
                         ),
                         Positioned(
                             left: 0,
