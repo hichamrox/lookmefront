@@ -111,12 +111,15 @@ class _AddOfferPageState extends State<AddOfferPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    "Taille",
-                    style: GoogleFonts.nunitoSans(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 18.0),
+                    child: Text(
+                      "Taille",
+                      style: GoogleFonts.nunitoSans(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20),
+                    ),
                   ),
                   Container(
                     width: size.width * 0.65,
@@ -127,7 +130,12 @@ class _AddOfferPageState extends State<AddOfferPage> {
                       icon: Icon(Icons.keyboard_arrow_down),
                       items: sizes.map((String items) {
                         return DropdownMenuItem(
-                            value: items, child: Text(items));
+                            value: items,
+                            child: Text(items,
+                                style: GoogleFonts.nunitoSans(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 18)));
                       }).toList(),
                       onChanged: (newValue) {
                         setState(() {
@@ -144,12 +152,15 @@ class _AddOfferPageState extends State<AddOfferPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    "Morphologie",
-                    style: GoogleFonts.nunitoSans(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 18.0),
+                    child: Text(
+                      "Morphologie",
+                      style: GoogleFonts.nunitoSans(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20),
+                    ),
                   ),
                   Container(
                     width: size.width * 0.5,
@@ -160,7 +171,13 @@ class _AddOfferPageState extends State<AddOfferPage> {
                       icon: Icon(Icons.keyboard_arrow_down),
                       items: morphologys.map((String items) {
                         return DropdownMenuItem(
-                            value: items, child: Text(items));
+                          value: items,
+                          child: Text(items,
+                              style: GoogleFonts.nunitoSans(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 18)),
+                        );
                       }).toList(),
                       onChanged: (newValue) {
                         setState(() {

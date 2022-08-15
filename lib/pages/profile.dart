@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/carteProfil.dart';
+import 'package:lookmefront/components/filePcker.dart';
 import 'package:lookmefront/pages/addAddress.dart';
-import 'package:lookmefront/pages/addOffer.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lookmefront/pages/addressList.dart';
 import 'package:lookmefront/pages/locationList.dart';
 import 'package:lookmefront/pages/login.dart';
@@ -21,6 +25,34 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  File? image;
+  String? imageURL;
+  addStringToSF(imageUrl) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('image', imageUrl);
+  }
+
+  Future upload() async {
+    if (image == null)
+      return;
+    else if (image != null) {
+      Dio dio = new Dio();
+      var formData = FormData.fromMap({
+        "imageURL": await MultipartFile.fromFile(
+          image!.path,
+        ),
+      });
+      try {
+        var response = await dio
+            .post('https://flutterauth10.herokuapp.com/upload', data: formData);
+        var res = (response.data.toString().split(" ")[1].split("}")[0]);
+        addStringToSF(res);
+      } on DioError catch (e) {
+        return ("e");
+      }
+    }
+  }
+
   removeValues() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("token");
@@ -113,7 +145,37 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Icons.edit_outlined,
                                 size: 23,
                               ),
-                              onTap: () {},
+                              onTap: () async {
+                                try {
+                                  final image = await ImagePicker()
+                                      .pickImage(source: ImageSource.gallery);
+                                  if (image == null) return;
+                                  final imageTemp = File(image.path);
+                                  setState(() => this.image = imageTemp);
+                                  await upload();
+                                  AuthService()
+                                      .updateImage(
+                                          snapshot.data
+                                              .toString()
+                                              .split(",")[2],
+                                          snapshot.data
+                                              .toString()
+                                              .split(",")[3])
+                                      .then((val) {
+                                    if (val.data['success']) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ProfilePage(),
+                                        ),
+                                      );
+                                    }
+                                  });
+                                } catch (e) {
+                                  // print('Failed to pick image $e');
+                                }
+                                ;
+                              },
                             ))
                       ]),
                       Column(

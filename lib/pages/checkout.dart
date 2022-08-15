@@ -52,8 +52,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: CheckouModification(
-                          "Adresse et livraison", snapshot.data, () {}),
+                      child: CheckouModification("Adresse et livraison",
+                          snapshot.data as List<Adress>, () {}),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
