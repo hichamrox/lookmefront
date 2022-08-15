@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/button.dart';
 import 'package:lookmefront/pages/checkout.dart';
+import 'package:lookmefront/pages/favorite.dart';
+import 'package:lookmefront/services/authservices.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductPage extends StatefulWidget {
@@ -194,15 +196,19 @@ class _ProductPageState extends State<ProductPage> {
                 Padding(
                     padding: const EdgeInsets.only(top: 10, left: 20),
                     child: IconButton(
-                      icon: clicked
-                          ? Image.asset(filledIcon)
-                          : Image.asset(unfilledIcon),
-                      onPressed: () {
-                        setState(() {
-                          clicked = !clicked;
-                        });
-                      },
-                    ))
+                        icon: Image.asset(unfilledIcon),
+                        onPressed: () async {
+                          var userId = await getUserId();
+                          await AuthService().addFavori(
+                              userId, widget.offerId, widget.label, widget.img);
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FavoritePage(),
+                            ),
+                          );
+                        }))
               ],
             ),
           ],

@@ -1,49 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../pages/favorite.dart';
+import '../services/authservices.dart';
+
 class FavorisCard extends StatelessWidget {
-  const FavorisCard(this.img, this.label);
+  const FavorisCard(this.img, this.label, this.id);
   final String img;
   final String label;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: ClipRRect(
-              child: Image.asset(img, scale: 1.7),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ClipRRect(
+              child: Image.network(img, scale: 10),
               borderRadius: new BorderRadius.all(
                 Radius.circular(5.0),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Text(
+            Text(
               label,
               style: GoogleFonts.nunitoSans(
                   color: Color.fromARGB(255, 87, 86, 86),
                   fontWeight: FontWeight.w600,
                   fontSize: 17),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 140),
-            child: Container(
-              height: 25,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 1,
+            IconButton(
+              onPressed: () async {
+                await AuthService().deleteFavori(id);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FavoritePage(),
                   ),
-                  shape: BoxShape.circle),
-              child: Icon(Icons.close),
-            ),
-          )
-        ],
+                );
+              },
+              icon: Container(
+                height: 25,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1,
+                    ),
+                    shape: BoxShape.circle),
+                child: Icon(Icons.close),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

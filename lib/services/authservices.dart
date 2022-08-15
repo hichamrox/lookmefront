@@ -8,6 +8,7 @@ import 'package:lookmefront/model/chat.dart';
 import 'package:lookmefront/model/favori.dart';
 import 'package:lookmefront/model/offres.dart';
 import 'package:lookmefront/model/order.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   Dio dio = new Dio();
@@ -135,7 +136,7 @@ class AuthService {
   }
 
   addFavori(userId, offerId, title, image) async {
-    return await dio.post('https://flutterauth10.herokuapp.com/addAdress',
+    return await dio.post('https://flutterauth10.herokuapp.com/addFavori',
         data: {
           "userId": userId,
           "offerId": offerId,
@@ -238,10 +239,13 @@ class AuthService {
     }
   }
 
-  Future<List<Favori>> getFavorisByUserId(id) async {
+  Future<List<Favori>> getFavorisByUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userId = prefs.getString('userId').toString();
     try {
-      Response<String> response = await dio.get(
-          'https://flutterauth10.herokuapp.com/getFavorisByUserId?id=' + id);
+      Response<String> response = await dio.post(
+          'https://flutterauth10.herokuapp.com/getFavorisByUserId?id=' +
+              userId);
       if (response.statusCode == 200) {
         var result = jsonDecode(response.toString()) as List;
         var listFavori = result.map((e) => Favori.fromJson(e)).toList();
