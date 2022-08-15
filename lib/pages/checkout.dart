@@ -230,6 +230,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     widget.price * widget.jours, widget.jours, widget.offerId);
                 await AuthService().addChat(widget.sellerId, widget.userId,
                     id.toString(), widget.image, widget.name);
+                Fluttertoast.showToast(
+                    timeInSecForIosWeb: 3,
+                    msg:
+                        "Vous ne pouvez pas passer cette commande car il s'agit de votre offre !",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: Color.fromARGB(255, 48, 246, 51),
+                    textColor: Colors.white,
+                    fontSize: 16);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
