@@ -32,7 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
     prefs.setString('image', imageUrl);
   }
 
-  Future upload() async {
+  Future upload(id) async {
     if (image == null)
       return;
     else if (image != null) {
@@ -47,6 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
             .post('https://flutterauth10.herokuapp.com/upload', data: formData);
         var res = (response.data.toString().split(" ")[1].split("}")[0]);
         addStringToSF(res);
+        AuthService().updateImage(id, res);
       } on DioError catch (e) {
         return ("e");
       }
@@ -152,25 +153,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                   if (image == null) return;
                                   final imageTemp = File(image.path);
                                   setState(() => this.image = imageTemp);
-                                  await upload();
-                                  AuthService()
-                                      .updateImage(
-                                          snapshot.data
-                                              .toString()
-                                              .split(",")[2],
-                                          snapshot.data
-                                              .toString()
-                                              .split(",")[3])
-                                      .then((val) {
-                                    if (val.data['success']) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => ProfilePage(),
-                                        ),
-                                      );
-                                    }
-                                  });
+                                  await upload(
+                                      snapshot.data.toString().split(",")[2]);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProfilePage(),
+                                    ),
+                                  );
                                 } catch (e) {
                                   // print('Failed to pick image $e');
                                 }
