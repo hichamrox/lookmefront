@@ -40,6 +40,7 @@ class _AddressListPageState extends State<AddressListPage> {
                     itemCount: snapshot.data?.length,
                     itemBuilder: (context, index) {
                       var adress = (snapshot.data as List<Adress>)[index];
+                      bool isChecked = false;
                       return AddressCard(
                         adress.city,
                         adress.adress,

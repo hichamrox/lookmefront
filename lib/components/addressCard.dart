@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/pages/addAddress.dart';
 import 'package:lookmefront/pages/editAddress.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddressCard extends StatefulWidget {
   final String city;
   final String address;
   final String cp;
-  const AddressCard(this.city, this.address, this.cp, this.onTapIcon);
+  AddressCard(this.city, this.address, this.cp, this.onTapIcon);
   final VoidCallback onTapIcon;
 
   @override
@@ -15,7 +16,15 @@ class AddressCard extends StatefulWidget {
 }
 
 class _AddressCardState extends State<AddressCard> {
-  bool isChecked = false;
+  setAdress(adress) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('adress', adress);
+  }
+
+  removeAdress() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("adress");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,27 +43,6 @@ class _AddressCardState extends State<AddressCard> {
     Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-        Row(
-          children: [
-            Checkbox(
-              checkColor: Colors.white,
-              fillColor: MaterialStateProperty.resolveWith(getColor),
-              value: isChecked,
-              onChanged: (bool? value) {
-                setState(() {
-                  isChecked = value!;
-                });
-              },
-            ),
-            Text(
-              "  Utiliser cette adresse",
-              style: GoogleFonts.nunitoSans(
-                  color: Color.fromARGB(255, 6, 6, 6),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 22),
-            )
-          ],
-        ),
         Card(
           child: Container(
             height: size.height * 0.15,
