@@ -70,7 +70,7 @@ class _CheckouModificationState extends State<CheckouModification> {
                           child: new Text(
                             item.city,
                             style: GoogleFonts.nunitoSans(
-                                color: Colors.grey,
+                                color: Color.fromARGB(255, 0, 0, 0),
                                 fontWeight: FontWeight.w400,
                                 fontSize: 18),
                           ),

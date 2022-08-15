@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/itemCard.dart';
 import 'package:lookmefront/model/offres.dart';
 import 'package:lookmefront/pages/product.dart';
@@ -20,16 +21,26 @@ class _AccueilPageState extends State<AccueilPage> {
     // return print(stringValue);
   }
 
+  List<String> morphologys = ["A", "V", "H", "8", ""];
+  List<String> sizes = ["XS", "S", "M", "L", "XL", ""];
+  String morphology = "";
+  String taille = "";
+  late List maList;
+  late List<Offre> filtre;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          leading: Icon(
-            Icons.search,
-            color: Colors.grey,
-            size: 40,
+          leading: GestureDetector(
+            onTap: () {},
+            child: Icon(
+              Icons.search,
+              color: Color.fromARGB(255, 255, 255, 255),
+              size: 40,
+            ),
           ),
           title: Container(
             height: size.height * 0.06,
@@ -42,118 +53,164 @@ class _AccueilPageState extends State<AccueilPage> {
             future: AuthService().getOffers(),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                return GridView.builder(
-                    itemCount: snapshot.data?.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2),
-                    itemBuilder: (context, index) {
-                      var offer = (snapshot.data as List<Offre>)[index];
-                      print(offer.image);
-                      return ItemCard(
-                        offerId: offer.id,
-                        height: size.height * 0.3,
-                        width: size.width * 0.2,
-                        img: offer.image,
-                        name: offer.title,
-                        prix: offer.cost.toString(),
-                        onTapPanier: () {
-                          getStringValuesSF();
-                        },
-                        onTapItem: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProductPage(
-                                    offer.id,
-                                    offer.userId,
-                                    offer.image,
-                                    offer.title,
-                                    offer.cost,
-                                    offer.description,
-                                    "30 reviews",
-                                    "4,5")),
-                          );
-                        },
-                      );
-                    });
+                maList = snapshot.data as List;
+                filtre = [];
+                maList.forEach(
+                  (e) {
+                    var el = e as Offre;
+                    if (taille.toString().isEmpty &&
+                        morphology.toString().isEmpty) {
+                      filtre.add(el);
+                      print("test1:::::" + filtre.toString());
+                    } else if (taille == el.size &&
+                        morphology == el.morphology) {
+                      print("test2:::::" + filtre.toString());
+                      filtre.add(el);
+                    }
+                  },
+                );
+
+                // if (taille.toString().isEmpty &&
+                //     morphology.toString().isEmpty) {
+                // } else if (taille == offer.size) {
+                // } else if (morphology == offer.morphology) {}
+                return Stack(
+                  children: [
+                    Column(
+                      children: [
+                        Row(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5, top: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 18.0),
+                                  child: Text(
+                                    "Taille",
+                                    style: GoogleFonts.nunitoSans(
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 15),
+                                  ),
+                                ),
+                                Container(
+                                  width: size.width * 0.2,
+                                  child: DropdownButton(
+                                    //size.width * 0.4,
+                                    isExpanded: true,
+                                    value: taille,
+                                    icon: Icon(Icons.keyboard_arrow_down),
+                                    items: sizes.map((String items) {
+                                      return DropdownMenuItem(
+                                          value: items,
+                                          child: Text(items,
+                                              style: GoogleFonts.nunitoSans(
+                                                  color: Color.fromARGB(
+                                                      255, 9, 9, 9),
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 15)));
+                                    }).toList(),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        taille = newValue.toString();
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ]),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5, top: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 18.0),
+                                child: Text(
+                                  "Morphologie",
+                                  style: GoogleFonts.nunitoSans(
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15),
+                                ),
+                              ),
+                              Container(
+                                width: size.width * 0.2,
+                                child: DropdownButton(
+                                  //size.width * 0.4,
+                                  isExpanded: true,
+                                  value: morphology,
+                                  icon: Icon(Icons.keyboard_arrow_down),
+                                  items: morphologys.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items,
+                                          style: GoogleFonts.nunitoSans(
+                                              color: Color.fromARGB(
+                                                  255, 23, 23, 23),
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 15)),
+                                    );
+                                  }).toList(),
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      morphology = newValue.toString();
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 150),
+                      child: GridView.builder(
+                          itemCount: filtre.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2),
+                          itemBuilder: (context, index) {
+                            var offer = (filtre as List<Offre>)[index];
+                            return ItemCard(
+                              offerId: offer.id,
+                              height: size.height * 0.3,
+                              width: size.width * 0.2,
+                              img: offer.image,
+                              name: offer.title,
+                              prix: offer.cost.toString(),
+                              onTapPanier: () {
+                                getStringValuesSF();
+                              },
+                              onTapItem: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProductPage(
+                                          offer.id,
+                                          offer.userId,
+                                          offer.image,
+                                          offer.title,
+                                          offer.cost,
+                                          offer.description,
+                                          "30 reviews",
+                                          "4,5")),
+                                );
+                              },
+                            );
+                          }),
+                    ),
+                  ],
+                );
               } else if (snapshot.hasError) {
                 return Text("Error");
               } else {
                 return const CircularProgressIndicator();
               }
-            })
-        /*body: GridView.count(
-          mainAxisSpacing: 20,
-          crossAxisCount: 2,
-          children: [
-            ItemCard(
-              height: size.height * 0.3,
-              width: size.width * 0.2,
-              img: "assets/images/robeBleu.png",
-              name: "robe bleu",
-              prix: "25",
-              onTapPanier: () {},
-              onTapItem: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ProductPage(
-                          "assets/images/robeBleu.png",
-                          "Robe bleu",
-                          "50",
-                          "Minimal Stand is made of by natural wood. The design that is very simple and minimal. This is truly one of the best furnitures in any family for now. With 3 different colors, you can easily select the best match for your home. ",
-                          "30 reviews",
-                          "4,5")),
-                );
-              },
-            ),
-            ItemCard(
-              height: size.height * 0.3,
-              width: size.width * 0.2,
-              img: "assets/images/robeBleu.png",
-              name: "robe bleu",
-              prix: "25",
-              onTapPanier: () {},
-              onTapItem: () {},
-            ),
-            ItemCard(
-              height: size.height * 0.3,
-              width: size.width * 0.2,
-              img: "assets/images/robeBleu.png",
-              name: "robe bleu",
-              prix: "25",
-              onTapPanier: () {},
-              onTapItem: () {},
-            ),
-            ItemCard(
-              height: size.height * 0.3,
-              width: size.width * 0.2,
-              img: "assets/images/robeBleu.png",
-              name: "robe bleu",
-              prix: "25",
-              onTapPanier: () {},
-              onTapItem: () {},
-            ),
-            ItemCard(
-              height: size.height * 0.3,
-              width: size.width * 0.2,
-              img: "assets/images/robeBleu.png",
-              name: "robe bleu",
-              prix: "25",
-              onTapPanier: () {},
-              onTapItem: () {},
-            ),
-            ItemCard(
-              height: size.height * 0.3,
-              width: size.width * 0.2,
-              img: "assets/images/robeBleu.png",
-              name: "robe bleu",
-              prix: "25",
-              onTapPanier: () {},
-              onTapItem: () {},
-            ),
-          ],
-        )*/
-        );
+            }));
   }
 }
