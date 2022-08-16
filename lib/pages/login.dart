@@ -115,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                             userData.name, userData.image);
 
                         Fluttertoast.showToast(
-                            msg: val.data['msg'],
+                            msg: "hello " + userData.name,
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             backgroundColor: Colors.green,

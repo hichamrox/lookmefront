@@ -66,6 +66,10 @@ class _AccueilPageState extends State<AccueilPage> {
                         morphology == el.morphology) {
                       print("test2:::::" + filtre.toString());
                       filtre.add(el);
+                    } else if (taille == el.size) {
+                      filtre.add(el);
+                    } else if (morphology == el.morphology) {
+                      filtre.add(el);
                     }
                   },
                 );
