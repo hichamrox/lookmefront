@@ -159,8 +159,10 @@ class AuthService {
         options: Options(contentType: Headers.formUrlEncodedContentType));
   }
 
-  Future<List<Offre>> getOffers() async {
+  Future<List<Offre>> getOffers(String token) async {
+    print(token);
     try {
+      dio.options.headers['Authorization'] = 'Bearer $token';
       Response<String> response =
           await dio.get('https://flutterauth10.herokuapp.com/getOffers');
       // print("response:" + response.toString());

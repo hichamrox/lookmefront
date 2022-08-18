@@ -104,8 +104,6 @@ class _LoginPageState extends State<LoginPage> {
                   child:
                       Button("Se connecter", true, true, size.width * 0.7, 50,
                           () async {
-                    var data = await AuthService().getOffers();
-                    // print("login::::::::" + data.toString());
                     AuthService().login(email, password).then((val) {
                       if (val.data['success']) {
                         token = val.data['token'];

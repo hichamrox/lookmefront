@@ -57,7 +57,10 @@ class _ProfilePageState extends State<ProfilePage> {
   removeValues() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("token");
-    prefs.remove("userData");
+    prefs.remove("email");
+    prefs.remove("name");
+    prefs.remove("userId");
+    prefs.remove("image");
   }
 
   Future<String> getInfo() async {
