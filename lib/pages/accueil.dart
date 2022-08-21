@@ -186,40 +186,45 @@ class _AccueilPageState extends State<AccueilPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 150),
-                            child: GridView.builder(
-                                itemCount: filtre.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2),
-                                itemBuilder: (context, index) {
-                                  var offer = (filtre as List<Offre>)[index];
-                                  return ItemCard(
-                                    offerId: offer.id,
-                                    height: size.height * 0.3,
-                                    width: size.width * 0.2,
-                                    img: offer.image,
-                                    name: offer.title,
-                                    prix: offer.cost.toString(),
-                                    onTapPanier: () {
-                                      getToken();
-                                    },
-                                    onTapItem: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ProductPage(
-                                                offer.id,
-                                                offer.userId,
-                                                offer.image,
-                                                offer.title,
-                                                offer.cost,
-                                                offer.description,
-                                                "30 reviews",
-                                                "4,5")),
-                                      );
-                                    },
-                                  );
-                                }),
+                            child: RefreshIndicator(
+                              onRefresh: () async {
+                                setState(() {});
+                              },
+                              child: GridView.builder(
+                                  itemCount: filtre.length,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2),
+                                  itemBuilder: (context, index) {
+                                    var offer = (filtre as List<Offre>)[index];
+                                    return ItemCard(
+                                      offerId: offer.id,
+                                      height: size.height * 0.3,
+                                      width: size.width * 0.2,
+                                      img: offer.image,
+                                      name: offer.title,
+                                      prix: offer.cost.toString(),
+                                      onTapPanier: () {
+                                        getToken();
+                                      },
+                                      onTapItem: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ProductPage(
+                                                  offer.id,
+                                                  offer.userId,
+                                                  offer.image,
+                                                  offer.title,
+                                                  offer.cost,
+                                                  offer.description,
+                                                  "30 reviews",
+                                                  "4,5")),
+                                        );
+                                      },
+                                    );
+                                  }),
+                            ),
                           ),
                         ],
                       );
