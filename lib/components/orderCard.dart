@@ -4,6 +4,8 @@ import 'package:lookmefront/components/button.dart';
 import 'package:lookmefront/pages/profile.dart';
 import 'package:lookmefront/services/authservices.dart';
 
+import '../pages/choixDiscussionPage.dart';
+
 class OrderCard extends StatelessWidget {
   final String orderNumber;
   final String date;
@@ -78,6 +80,11 @@ class OrderCard extends StatelessWidget {
                 child: Button("Contact", true, true, size.width * 0.25, 40,
                     () async {
                   var data = await AuthService().getOfferById(offerId);
+                  Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChoixDiscussionPage(),
+                              ));
                   // print(data);
                 }, 5),
               )

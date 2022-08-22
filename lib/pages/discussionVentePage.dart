@@ -45,8 +45,12 @@ class _DiscussionVentePageState extends State<DiscussionVentePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ChatPage(chat.sellerId,
-                                    chat.costumerId, chat.orderId, chat.title)),
+                                builder: (context) => ChatPage(
+                                    chat.sellerId,
+                                    chat.costumerId,
+                                    chat.orderId,
+                                    chat.title,
+                                    chat.image)),
                           );
                         });
                       });

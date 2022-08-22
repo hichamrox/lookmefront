@@ -13,7 +13,9 @@ class ChatPage extends StatefulWidget {
   final String receiverId;
   final String orderId;
   final String title;
-  const ChatPage(this.senderId, this.receiverId, this.orderId, this.title);
+  final String image;
+  const ChatPage(
+      this.senderId, this.receiverId, this.orderId, this.title, this.image);
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -116,9 +118,7 @@ class _ChatPageState extends State<ChatPage> {
             Padding(
               padding: const EdgeInsets.only(right: 15),
               child: CircleAvatar(
-                  radius: 20,
-                  backgroundImage: NetworkImage(
-                      "https://robe-vintage.net/upl/2017/02/robe-vintage-retro-a-pois.png")),
+                  radius: 20, backgroundImage: NetworkImage(widget.image)),
             ),
             Column(
               children: [

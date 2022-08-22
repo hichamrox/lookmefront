@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lookmefront/components/button.dart';
@@ -27,6 +30,36 @@ class CheckoutPage extends StatefulWidget {
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
 }
+
+/*Future sendEmail(String name, String email, String message) async {
+  final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+  const serviceID = 'service_64kz2nc';
+  const templateID = 'template_0u5bmb5';
+  const publicKey = 'user_MHnLpCSp1i5VWkofm2vyl';
+  // const publicKey = '';
+  var templateParams = {
+    'to_name': name,
+    'replay_to': email,
+    'message': message
+  };
+
+  final response = await http.post(url,
+      headers: {
+        'Content-Type': 'application/json'
+      }, //This line makes sure it works for all platforms.
+      body: json.encode({
+        'serviceID': serviceID,
+        'templateID': templateID,
+        'publicKey': publicKey,
+        // 'publicKey':publicKey,
+        'template_params': {
+          'to_name': name,
+          'replay_to': email,
+          'message': message
+        }
+      }));
+  return response.statusCode;
+}*/
 
 class _CheckoutPageState extends State<CheckoutPage> {
   @override
@@ -280,12 +313,26 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               widget.price * widget.jours,
                               widget.jours,
                               widget.offerId);
+                          /*await sendEmail(widget.name, "marwa.brj@gmail.com",
+                                  "hello ceci est un message de marwa")
+                              .then((value) =>
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    value == 200
+                                        ? const SnackBar(
+                                            content: Text('Message Sent!'),
+                                            backgroundColor: Colors.green)
+                                        : const SnackBar(
+                                            content:
+                                                Text('Failed to send message!'),
+                                            backgroundColor: Colors.red),
+                                  ));*/
                           await AuthService().addChat(
                               widget.sellerId,
                               widget.userId,
                               id.toString(),
                               widget.image,
                               widget.name);
+
                           Fluttertoast.showToast(
                               timeInSecForIosWeb: 3,
                               msg: "Votre commande est passé avec succé !",
